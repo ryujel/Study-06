@@ -246,8 +246,14 @@
   <button class="clear-checked" id="clear-btn" style="display:none;">체크된 항목 모두 삭제</button>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const STORAGE_KEY = 'shopping-list-items';
+  // Public project URL + publishable (anon) key — safe to expose client-side,
+  // access is scoped by the RLS policy on the shopping_items table.
+  const SUPABASE_URL = 'https://cwzkfcpgodxtmosunzwg.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_ghWXiSH58WaOHV_mmm5OfQ_1CWpUnfu';
+  const TABLE = 'shopping_items';
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   const listEl = document.getElementById('list');
   const inputEl = document.getElementById('item-input');
@@ -256,21 +262,16 @@
   const doneCountEl = document.getElementById('done-count');
   const clearBtn = document.getElementById('clear-btn');
 
-  /** @type {{id: string, text: string, checked: boolean}[]} */
-  let items = loadItems();
+  /** @type {{id: number, text: string, checked: boolean}[]} */
+  let items = [];
 
-  function loadItems() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : [];
-    } catch (e) {
-      console.error('로컬 스토리지 읽기 실패:', e);
+  async function loadItems() {
+    const { data, error } = await db.from(TABLE).select('*').order('id', { ascending: true });
+    if (error) {
+      console.error('Supabase에서 아이템 불러오기 실패:', error);
       return [];
     }
-  }
-
-  function saveItems() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    return data;
   }
 
   function render() {
@@ -305,48 +306,63 @@
     clearBtn.style.display = done > 0 ? 'block' : 'none';
   }
 
-  function addItem() {
+  async function addItem() {
     const text = inputEl.value.trim();
     if (!text) return;
 
-    items.push({
-      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
-      text,
-      checked: false,
-    });
-
     inputEl.value = '';
-    saveItems();
+    const { data, error } = await db.from(TABLE).insert({ text }).select().single();
+    if (error) {
+      console.error('아이템 추가 실패:', error);
+      return;
+    }
+
+    items.push(data);
     render();
     inputEl.focus();
   }
 
-  function toggleItem(id) {
+  async function toggleItem(id) {
     const item = items.find((i) => i.id === id);
-    if (item) item.checked = !item.checked;
-    saveItems();
-    render();
-  }
+    if (!item) return;
 
-  function removeItem(id, li) {
-    if (li) {
-      li.classList.add('removing');
-      li.addEventListener('animationend', () => {
-        items = items.filter((i) => i.id !== id);
-        saveItems();
-        render();
-      }, { once: true });
-    } else {
-      items = items.filter((i) => i.id !== id);
-      saveItems();
+    const nextChecked = !item.checked;
+    item.checked = nextChecked; // optimistic update
+    render();
+
+    const { error } = await db.from(TABLE).update({ checked: nextChecked }).eq('id', id);
+    if (error) {
+      console.error('상태 변경 실패:', error);
+      item.checked = !nextChecked; // revert on failure
       render();
     }
   }
 
-  function clearChecked() {
+  function removeItem(id, li) {
+    const commitRemove = async () => {
+      items = items.filter((i) => i.id !== id);
+      render();
+      const { error } = await db.from(TABLE).delete().eq('id', id);
+      if (error) console.error('아이템 삭제 실패:', error);
+    };
+
+    if (li) {
+      li.classList.add('removing');
+      li.addEventListener('animationend', commitRemove, { once: true });
+    } else {
+      commitRemove();
+    }
+  }
+
+  async function clearChecked() {
+    const checkedIds = items.filter((i) => i.checked).map((i) => i.id);
+    if (checkedIds.length === 0) return;
+
     items = items.filter((i) => !i.checked);
-    saveItems();
     render();
+
+    const { error } = await db.from(TABLE).delete().in('id', checkedIds);
+    if (error) console.error('체크된 항목 일괄 삭제 실패:', error);
   }
 
   addBtn.addEventListener('click', addItem);
@@ -358,7 +374,7 @@
   listEl.addEventListener('click', (e) => {
     const li = e.target.closest('li.item');
     if (!li) return;
-    const id = li.dataset.id;
+    const id = Number(li.dataset.id);
 
     if (e.target.classList.contains('checkbox')) {
       toggleItem(id);
@@ -369,7 +385,10 @@
 
   clearBtn.addEventListener('click', clearChecked);
 
-  render();
+  (async () => {
+    items = await loadItems();
+    render();
+  })();
 </script>
 
 </body>
