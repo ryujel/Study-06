@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository contents
 
-- `shopping-list.html` — a single-file, dependency-free shopping list web app (the only source code in this repo)
+- `index.html` — a single-file, dependency-free shopping list web app (the only source code in this repo)
 - `AI_기술_트렌드_요약.pptx` — a slide deck; not source code
 - `이미지/` — reference images used alongside the deck
 
@@ -12,13 +12,13 @@ There is no `package.json`, build tool, linter, or test suite. There is nothing 
 
 ## Running
 
-`shopping-list.html` is fully self-contained (inline `<style>` and `<script>`, no external dependencies). Open it directly in a browser, or serve it with any static file server, e.g.:
+`index.html` is fully self-contained (inline `<style>` and `<script>`, no external dependencies). Open it directly in a browser, or serve it with any static file server, e.g.:
 
 ```
 npx serve .
 ```
 
-## Architecture of shopping-list.html
+## Architecture of index.html
 
 - All state lives in a single in-memory array of `{ id, text, checked }` items, persisted as JSON to `localStorage` under the key `shopping-list-items` (`loadItems` / `saveItems`).
 - `render()` does a full re-render of `<ul id="list">` from the `items` array on every mutation — there is no diffing, so any state change is followed by a `render()` call to stay in sync.
