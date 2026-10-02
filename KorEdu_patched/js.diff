@@ -1,0 +1,54 @@
+--- C:/Users/RMKNote/AppData/Local/Temp/claude/C------Markup/07800133-eba9-4966-9a21-2852c08cdab2/scratchpad/orig/portal.js
++++ portal.js
+@@ -197,6 +197,11 @@
+     });
+     let data = {};
+     try { data = await response.json(); } catch (_) {}
++    // 로그인이 풀렸다(IP가 바뀌어 해제된 경우 등) → 계정 상태를 다시 읽어 안내를 띄우고 로그인 화면으로
++    if (response.status === 401 && state.user && !String(path).startsWith('/api/auth/') && !api._reauth) {
++      api._reauth = true;
++      try { await renderAccount(); } finally { api._reauth = false; }
++    }
+     if (!response.ok) {
+       const err = new Error(data.message || `요청 실패 (${response.status})`);
+       err.status = response.status;
+@@ -362,14 +367,17 @@
+           : '<span class="admin-fixed">—</span>';
+         return `<div class="admin-user-row" data-admin-email="${escapeHtml(user.email)}">
+           <div class="admin-fixed">${escapeHtml(user.member_id || '—')}</div>
+-          <div class="admin-user-main"><strong>${escapeHtml(user.name || user.email)}</strong><span>${escapeHtml(user.email)}</span></div>
++          <div class="admin-user-main"><strong>${escapeHtml(user.name || user.email)}</strong><span>${escapeHtml(user.email)}</span>${user.last_ip ? `<span title="마지막 로그인 IP">IP ${escapeHtml(user.last_ip)}</span>` : ''}</div>
+           <div>${fixed ? '<span class="admin-fixed">최초 Admin</span>' : `<select class="admin-role-select" data-role-select>${options}</select>`}</div>
+-          <div>Lev ${escapeHtml(user.level ?? 1)}</div>
++          <div class="admin-fixed">${escapeHtml(user.auth_lv ?? '—')}</div>
++          <div>${['student', 'guest'].includes(user.role)
++            ? `<select class="admin-role-select" data-learning-select>${['초급', '중급', '고급'].map(l => `<option value="${l}" ${(user.learning_level || '초급') === l ? 'selected' : ''}>${l}</option>`).join('')}</select>`
++            : '<span class="admin-fixed">—</span>'}</div>
+           <div>${rosterCell}</div>
+           <div>${fixed ? '' : '<button class="admin-user-save" type="button" data-save-role>저장</button>'}</div>
+         </div>`;
+       }).join('');
+-      adminUserList.innerHTML = `<div class="admin-user-row header"><div>회원ID</div><div>회원</div><div>Role</div><div>Lev</div><div>담당 선생님</div><div></div></div>${rows || '<div class="admin-empty">가입된 회원이 없습니다.</div>'}`;
++      adminUserList.innerHTML = `<div class="admin-user-row header"><div>회원ID</div><div>회원</div><div>Position</div><div>권한등급</div><div>학습등급</div><div>담당 선생님</div><div></div></div>${rows || '<div class="admin-empty">가입된 회원이 없습니다.</div>'}`;
+     } catch (err) {
+       adminUserList.innerHTML = `<div class="admin-empty">${escapeHtml(err.message)}</div>`;
+     }
+@@ -5659,6 +5667,7 @@
+       state.user = result.user;
+       state.actingAs = !!result.actingAs;
+       state.realUser = result.realUser || null;
++      if (result.reason === 'ip_changed') alert(result.message || '접속 IP가 바뀌어 로그인이 해제되었습니다. 다시 로그인해 주세요.');
+     } catch (_) {
+       state.user = null;
+       state.actingAs = false;
+@@ -6849,7 +6858,8 @@
+       if (!email || !role) return;
+       roleSaveBtn.disabled = true;
+       try {
+-        await api('/api/admin/set-role', { method: 'POST', body: { email, role } });
++        const learning_level = row?.querySelector('[data-learning-select]')?.value || '';
++        await api('/api/admin/set-role', { method: 'POST', body: { email, role, learning_level } });
+         roleSaveBtn.textContent = '완료';
+         state.devUsers = null;
+         setTimeout(() => { roleSaveBtn.textContent = '저장'; roleSaveBtn.disabled = false; loadAdminUsers(); }, 800);
+

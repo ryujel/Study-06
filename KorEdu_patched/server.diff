@@ -1,0 +1,194 @@
+--- C:/Users/RMKNote/AppData/Local/Temp/claude/C------Markup/07800133-eba9-4966-9a21-2852c08cdab2/scratchpad/orig/portal_server.py
++++ portal_server.py
+@@ -28,13 +28,17 @@
+ # 회원번호(시리얼 ID): 이름이 겹쳐도 사람을 구분하는 고유 키. 역할별로 접두사+번호를 따로 매긴다
+ # (T01=선생님 중 첫 번째, S0000001=학생 중 첫 번째). 역할이 바뀌면 새 접두사로 새 번호를 받고,
+ # 예전 번호는 previous_member_ids 에 이력으로 남긴다 — 버리는 게 아니라 "몇 번이었다가 몇 번이 됐다".
+-MEMBER_ID_PREFIX = {'admin': 'A', 'teacher': 'T', 'student': 'S', 'guest': 'G'}
++MEMBER_ID_PREFIX = {'admin': 'AT', 'teacher': 'T', 'student': 'S', 'guest': 'G'}
+ MEMBER_ID_WIDTH = {'admin': 2, 'teacher': 2, 'student': 7, 'guest': 2}
+ 
+ # 권한등급(auth_lv): 화면에 이미 쓰이는 "강의단계 Lev1~4"랑은 다른 개념이라 이름을 분리했다.
+ # 숫자가 작을수록 권한이 세다 — 관리자=0, 선생님=1, 학생=2(일단 2만 씀, 3은 나중에), 손님=10.
+ AUTH_LV_DEFAULT = {'admin': 0, 'teacher': 1, 'student': 2, 'guest': 10}
+ 
++# 학습등급: 학생의 한국어 실력 구분(권한등급과 별개). 학생/손님에게만 의미가 있다. 기본은 초급.
++LEARNING_LEVELS = ('초급', '중급', '고급')
++LEARNING_LEVEL_DEFAULT = '초급'
++
+ 
+ def auth_lv_for_role(role: str) -> int:
+     return AUTH_LV_DEFAULT.get(role, 2)
+@@ -75,6 +79,12 @@
+ EMAIL_RE = re.compile(r'^[^\s@]+@[^\s@]+\.[^\s@]+$')
+ BOOTSTRAP_ADMIN_EMAIL = 'ryujel@naver.com'
+ 
++# 접속 IP: 로그인할 때 IP를 기록하고, 그 로그인(쿠키)은 같은 IP에서만 유효하다.
++# IP가 바뀌면 "IP가 바뀌었다"고 알리고 로그인을 해제한다. 같은 IP면 쿠키는 SESSION_DAYS(30일) 유지.
++# 웹 서버 앞에 프록시가 있으면 환경변수 KOREDU_TRUST_PROXY=1 로 X-Forwarded-For 를 쓴다(그 외에는 접속 소켓 주소).
++TRUST_PROXY = os.environ.get('KOREDU_TRUST_PROXY') == '1'
++IP_LOG_MAX = 30
++
+ # LOCAL browser lifecycle. The portal page sends heartbeats and a pagehide goodbye.
+ # Closing/navigating away from the last KorEdu tab stops the LOCAL portal after a short grace period.
+ CLIENT_LOCK = threading.RLock()
+@@ -156,6 +166,9 @@
+             if u.get('email_verified') and u.get('auth_lv') is None:
+                 u['auth_lv'] = auth_lv_for_role(u.get('role', 'student'))
+                 changed = True
++            if u.get('email_verified') and u.get('role') in ('student', 'guest') and u.get('learning_level') not in LEARNING_LEVELS:
++                u['learning_level'] = LEARNING_LEVEL_DEFAULT
++                changed = True
+         if changed:
+             _write_json(USERS_FILE, users)
+ 
+@@ -234,6 +247,7 @@
+         'email_verified': bool(user.get('email_verified')),
+         'approved': bool(user.get('approved', True)),
+         'auth_lv': int(user.get('auth_lv')) if user.get('auth_lv') is not None else auth_lv_for_role(user.get('role', 'student')),
++        'learning_level': user.get('learning_level') if user.get('role') in ('student', 'guest') else None,
+         'created_at': user.get('created_at'),
+         'teacher': student_teacher(email),  # 이 학생의 담당 선생 이메일 (없으면 None)
+     }
+@@ -997,6 +1011,16 @@
+             raise ValueError('잘못된 요청 형식입니다.')
+         return data
+ 
++    def _client_ip(self) -> str:
++        if TRUST_PROXY:
++            fwd = (self.headers.get('X-Forwarded-For') or '').split(',')[0].strip()
++            if fwd:
++                return fwd
++        try:
++            return self.client_address[0]
++        except Exception:
++            return ''
++
+     def _session_token(self) -> str | None:
+         raw = self.headers.get('Cookie', '')
+         if not raw:
+@@ -1022,8 +1046,59 @@
+                 sessions.pop(token, None)
+                 _write_json(SESSIONS_FILE, sessions)
+                 return None
++            if session.get('revoked'):
++                return None
++            ip = self._client_ip()
++            bound = session.get('ip')
++            if not bound:
++                session['ip'] = ip          # IP 기록이 없던 예전 로그인: 지금 IP에 묶는다
++                sessions[token] = session
++                _write_json(SESSIONS_FILE, sessions)
++            elif ip and bound != ip:
++                # 로그인했던 IP와 다르다 → 로그인 해제(다음 /api/auth/me 에서 안내 후 정리)
++                session['revoked'] = 'ip_changed'
++                session['revoked_ip'] = ip
++                session['revoked_at'] = now_ts()
++                sessions[token] = session
++                _write_json(SESSIONS_FILE, sessions)
++                self._log_ip(normalize_email(session.get('email', '')), 'ip_changed', ip, bound)
++                return None
+         return {**session, '_token': token}
+ 
++    def _log_ip(self, email: str, event: str, ip: str, old_ip: str = '') -> None:
++        """회원 기록에 접속 IP 이력을 남긴다(최근 IP_LOG_MAX개). event: login | ip_changed"""
++        with LOCK:
++            users = _read_json(USERS_FILE, {})
++            user = users.get(email)
++            if not user:
++                return
++            log = user.get('ip_log') or []
++            entry = {'event': event, 'ip': ip, 'at': now_ts()}
++            if old_ip:
++                entry['from'] = old_ip
++            log.append(entry)
++            user['ip_log'] = log[-IP_LOG_MAX:]
++            if event == 'login':
++                user['last_ip'] = ip
++                user['last_login_at'] = now_ts()
++            users[email] = user
++            _write_json(USERS_FILE, users)
++
++    def _pop_ip_notice(self) -> dict | None:
++        """IP가 바뀌어 해제된 로그인이면 안내 내용을 돌려주고 그 세션을 지운다(한 번만 안내)."""
++        token = self._session_token()
++        if not token:
++            return None
++        with LOCK:
++            sessions = _read_json(SESSIONS_FILE, {})
++            rec = sessions.get(token)
++            if not rec or rec.get('revoked') != 'ip_changed':
++                return None
++            sessions.pop(token, None)
++            _write_json(SESSIONS_FILE, sessions)
++        return {'reason': 'ip_changed', 'oldIp': rec.get('ip'), 'newIp': rec.get('revoked_ip'),
++                'message': f"접속 IP가 바뀌어 로그인이 해제되었습니다. ({rec.get('ip')} → {rec.get('revoked_ip')}) 다시 로그인해 주세요."}
++
+     def _real_user(self) -> dict | None:
+         """실제 로그인한 사용자 (act_as 무시)."""
+         session = self._session_record()
+@@ -1072,6 +1147,10 @@
+             user = self._current_user()
+             real = self._real_user()
+             acting = bool(real and user and real.get('email') != user.get('email'))
++            notice = None if user else self._pop_ip_notice()
++            if notice:
++                return self._json(200, {'ok': True, 'user': None, 'realUser': None, 'actingAs': False,
++                                        'mode': 'LOCAL_JSON', **notice}, cookie=clear_session_cookie())
+             return self._json(200, {
+                 'ok': True,
+                 'user': public_user(user) if user else None,
+@@ -1304,7 +1383,7 @@
+         ensure_member_ids()
+         with LOCK:
+             users = _read_json(USERS_FILE, {})
+-            rows = [public_user(user) for user in users.values() if user.get('email_verified')]
++            rows = [{**public_user(user), 'last_ip': user.get('last_ip'), 'last_login_at': user.get('last_login_at')} for user in users.values() if user.get('email_verified')]
+         rows.sort(key=lambda row: (0 if row.get('email') == normalize_email(BOOTSTRAP_ADMIN_EMAIL) else 1, row.get('created_at') or 0, row.get('email') or ''))
+         return self._json(200, {'ok': True, 'users': rows})
+ 
+@@ -1319,6 +1398,9 @@
+             raise ValueError('Role은 Admin / Teacher / Student / Guest 중에서 선택하세요.')
+         if email == normalize_email(BOOTSTRAP_ADMIN_EMAIL) and role != 'admin':
+             raise ValueError('최초 Admin 계정은 Admin에서 변경할 수 없습니다.')
++        learning = data.get('learning_level')
++        if learning not in (None, '') and learning not in LEARNING_LEVELS:
++            raise ValueError('학습등급은 초급 / 중급 / 고급 중에서 선택하세요.')
+         with LOCK:
+             users = _read_json(USERS_FILE, {})
+             user = users.get(email)
+@@ -1330,6 +1412,13 @@
+                 assign_member_id(user, users)   # 역할이 바뀌면 새 접두사로 새 회원번호, 예전 번호는 이력으로 보관
+                 user['approved'] = role != 'student'  # 학생이 아니면 승인 불필요, 학생이 되면 다시 승인 필요
+                 user['auth_lv'] = auth_lv_for_role(role)
++            if role in ('student', 'guest'):
++                if learning in LEARNING_LEVELS:
++                    user['learning_level'] = learning
++                elif user.get('learning_level') not in LEARNING_LEVELS:
++                    user['learning_level'] = LEARNING_LEVEL_DEFAULT
++            else:
++                user.pop('learning_level', None)
+             user['updated_at'] = now_ts()
+             users[email] = user
+             _write_json(USERS_FILE, users)
+@@ -2221,6 +2310,8 @@
+             # 학생은 선생님이 승인해야 강의실이 열린다(승인 = 그 선생님과 자동 매칭). 선생님/관리자는 승인 불필요.
+             if 'approved' not in user:
+                 user['approved'] = user.get('role') != 'student'
++            if user.get('role') in ('student', 'guest') and user.get('learning_level') not in LEARNING_LEVELS:
++                user['learning_level'] = LEARNING_LEVEL_DEFAULT
+             user['updated_at'] = now_ts()
+             users[email] = user
+             _write_json(USERS_FILE, users)
+@@ -2256,8 +2347,9 @@
+                 return self._json(403, {'ok': False, 'code': 'EMAIL_NOT_VERIFIED', 'email': email, 'message': '이메일 인증을 먼저 완료하세요.'})
+             sessions = _read_json(SESSIONS_FILE, {})
+             token = secrets.token_urlsafe(32)
+-            sessions[token] = {'email': email, 'created_at': now_ts(), 'expires_at': now_ts() + SESSION_DAYS * 86400}
++            sessions[token] = {'email': email, 'created_at': now_ts(), 'expires_at': now_ts() + SESSION_DAYS * 86400, 'ip': self._client_ip()}
+             _write_json(SESSIONS_FILE, sessions)
++        self._log_ip(email, 'login', self._client_ip())
+         cookie = session_cookie(token)
+         return self._json(200, {'ok': True, 'user': public_user(user)}, cookie=cookie)
+ 
+

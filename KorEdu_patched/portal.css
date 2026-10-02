@@ -1,0 +1,1755 @@
+:root{
+  --bg:#f6f8fb;
+  --surface:#ffffff;
+  --surface-2:#f9fafc;
+  --text:#172033;
+  --muted:#6d7688;
+  --line:#e7ebf1;
+  --line-strong:#d8dee8;
+  --accent:#3157d5;
+  --accent-soft:#edf1ff;
+  --shadow:0 16px 50px rgba(25,39,72,.10);
+  --header-h:72px;
+  --subnav-h:54px;
+  --rail-w:54px;
+  --drawer-w:360px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family:Inter,"Pretendard","Noto Sans KR",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+button,input{font:inherit}
+button{color:inherit}
+.app-shell{height:100%;min-width:320px;background:var(--bg)}
+.site-header{height:var(--header-h);background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);position:relative;z-index:30;backdrop-filter:blur(12px)}
+.header-inner{height:100%;display:flex;align-items:center;gap:34px;padding:0 78px 0 34px;max-width:1920px;margin:0 auto}
+.brand{border:0;background:transparent;display:flex;align-items:center;gap:10px;padding:6px 8px 6px 0;cursor:pointer}
+.brand-mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#172033;color:white;font-size:17px;font-weight:800;letter-spacing:-.03em}
+.brand-text{font-size:21px;font-weight:800;letter-spacing:-.04em}
+.primary-nav{display:flex;align-items:center;gap:4px;height:100%}
+.primary-nav-item{height:42px;padding:0 18px;border:0;border-radius:11px;background:transparent;font-weight:700;font-size:15px;color:#4d5668;cursor:pointer;transition:.18s ease}
+.primary-nav-item:hover{background:#f3f5f9;color:#1e293b}
+.primary-nav-item.active{background:var(--accent-soft);color:var(--accent)}
+.account-area{margin-left:auto;display:flex;align-items:center;gap:8px}
+.link-button,.signup-button,.account-chip{height:38px;border-radius:10px;padding:0 14px;font-size:14px;font-weight:700;cursor:pointer}
+.link-button{border:0;background:transparent;color:#4d5668}.link-button:hover{background:#f3f5f9}
+.keep-youtube-toggle{height:34px;border-radius:9px;padding:0 12px;font-size:12px;font-weight:800;cursor:pointer;border:1px solid #d5dbe4;background:#fff;color:#5a6473;white-space:nowrap;flex:0 0 auto}
+.keep-youtube-toggle:hover{background:#f3f5f9}
+.keep-youtube-toggle.on{background:#2f54ca;border-color:#2f54ca;color:#fff}
+.signup-button{border:1px solid #222b3c;background:#222b3c;color:white}.signup-button:hover{background:#111827}
+.account-chip{border:1px solid var(--line);background:white;display:flex;align-items:center;gap:8px}
+.avatar-mini{width:24px;height:24px;border-radius:50%;background:#eef1f6;display:grid;place-items:center;font-size:11px;font-weight:800;flex:0 0 auto}
+.mypage-dropdown{position:relative}
+.mypage-trigger{height:38px;border-radius:10px;padding:0 14px 0 8px;font-size:14px;font-weight:700;cursor:pointer;
+  border:1px solid var(--line);background:white;display:flex;align-items:center;gap:8px;color:#172033}
+.mypage-trigger:hover{background:#f6f8fb}
+.mypage-menu{position:absolute;top:calc(100% + 6px);right:0;z-index:60;min-width:150px;
+  background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 16px 40px rgba(23,32,51,.14);
+  padding:6px;display:flex;flex-direction:column;gap:1px}
+.mypage-menu button{height:36px;border:0;background:transparent;border-radius:8px;padding:0 10px;
+  font:inherit;font-size:13px;font-weight:700;color:#374151;text-align:left;cursor:pointer;white-space:nowrap}
+.mypage-menu button:hover{background:#f3f5f9;color:#2f54ca}
+.subnav-wrap{height:var(--subnav-h);background:white;border-bottom:1px solid var(--line);position:relative;z-index:25}
+.subnav-inner{height:100%;display:flex;align-items:center;padding:0 78px 0 34px;gap:20px;max-width:1920px;margin:0 auto}
+.section-context{font-size:12px;font-weight:800;letter-spacing:.08em;color:#9aa2b0;text-transform:uppercase;min-width:54px}
+.secondary-nav{display:flex;align-items:center;gap:22px;height:100%}
+.secondary-nav button{position:relative;height:100%;border:0;background:transparent;padding:0 2px;color:#687184;font-size:14px;font-weight:700;cursor:pointer}
+.secondary-nav button:hover{color:#263244}
+.secondary-nav button.active{color:#172033}
+.secondary-nav button.active::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--accent);border-radius:2px 2px 0 0}
+.workspace{height:calc(100vh - var(--header-h));padding-right:0;position:relative;overflow:hidden}
+body.has-widget-rail .workspace{padding-right:var(--rail-w)}
+body.has-subnav .workspace{height:calc(100vh - var(--header-h) - var(--subnav-h))}
+.home-view{height:100%;overflow:auto;padding:clamp(44px,7vh,86px) clamp(28px,7vw,110px) 60px;background:radial-gradient(circle at 78% 22%,rgba(49,87,213,.08),transparent 26%),linear-gradient(180deg,#fbfcfe 0%,#f6f8fb 100%)}
+.home-copy{max-width:780px}
+.eyebrow{display:inline-block;margin-bottom:20px;font-size:12px;letter-spacing:.16em;font-weight:800;color:var(--accent)}
+.home-copy h1{font-size:clamp(40px,5vw,72px);line-height:1.08;letter-spacing:-.055em;margin:0;color:#152033;font-weight:850}
+.home-copy p{max-width:650px;margin:24px 0 0;font-size:17px;line-height:1.8;color:#6c7587}
+.home-actions{display:flex;gap:10px;margin-top:30px}
+.hero-button,.ghost-button{height:48px;border-radius:12px;padding:0 20px;font-size:14px;font-weight:800;cursor:pointer}
+.hero-button{border:1px solid var(--accent);background:var(--accent);color:white;box-shadow:0 8px 24px rgba(49,87,213,.22)}
+.ghost-button{border:1px solid var(--line-strong);background:white;color:#303a4b}
+.home-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:940px;margin-top:clamp(42px,8vh,78px)}
+.feature-card{border:1px solid var(--line);background:rgba(255,255,255,.88);min-height:112px;border-radius:20px;padding:22px;display:grid;grid-template-columns:54px 1fr auto;align-items:center;gap:16px;text-align:left;cursor:pointer;box-shadow:0 8px 30px rgba(24,37,66,.05);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.feature-card:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(24,37,66,.09);border-color:#d9dfeb}
+.feature-icon{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:#f0f3f8;color:#364153}
+.feature-icon svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.video-icon svg path:first-child{fill:currentColor;stroke:none}
+.feature-copy{display:flex;flex-direction:column;gap:7px}.feature-copy strong{font-size:18px;letter-spacing:-.02em}.feature-copy small{font-size:13px;color:#7d8697;white-space:normal;line-height:1.45}.feature-arrow{font-size:22px;color:#9aa2af;transition:.18s ease}.feature-card:hover .feature-arrow{transform:translateX(4px);color:var(--accent)}
+.module-view{height:100%;background:white;position:relative;display:flex;flex-direction:column}
+.module-status{height:36px;min-height:36px;background:#fbfcfe;border-bottom:1px solid #edf0f4;display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 16px;color:#8a93a3;font-size:11px}
+.status-left{display:flex;align-items:center;gap:8px}.status-dot{width:7px;height:7px;border-radius:50%;background:#69b486;box-shadow:0 0 0 3px rgba(105,180,134,.12)}
+.open-external{width:28px;height:28px;border:0;background:transparent;border-radius:7px;display:grid;place-items:center;color:#8992a1;cursor:pointer}.open-external:hover{background:#f0f3f7;color:#4b5565}.open-external svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#moduleFrame{width:100%;height:100%;border:0;background:white;display:block}
+.placeholder-view{position:absolute;inset:36px 0 0;display:grid;place-items:center;background:linear-gradient(180deg,#fbfcfe,#f6f8fb);padding:24px}
+.placeholder-card{text-align:center;max-width:520px}.placeholder-symbol{width:60px;height:60px;border-radius:18px;background:white;border:1px solid var(--line);display:grid;place-items:center;margin:0 auto 18px;font-size:28px;color:#7c8798;box-shadow:0 8px 30px rgba(20,35,65,.06)}.placeholder-card h2{margin:0;font-size:25px;letter-spacing:-.035em}.placeholder-card p{margin:12px 0 0;color:#778194;line-height:1.7}
+.widget-rail{position:fixed;right:0;top:var(--header-h);bottom:0;width:var(--rail-w);z-index:45;background:rgba(255,255,255,.98);border-left:1px solid var(--line);display:flex;flex-direction:column;align-items:center;padding:12px 7px 10px;gap:5px;overflow:visible}
+body.has-subnav .widget-rail{top:calc(var(--header-h) + var(--subnav-h))}
+.widget-toggle{width:40px;height:40px;border:1px solid transparent;border-radius:11px;background:transparent;color:#707a8b;display:grid;place-items:center;font-size:12px;font-weight:800;cursor:pointer;transition:.16s ease}
+.widget-toggle.widget-toggle-text{font-size:12px;letter-spacing:-.03em;white-space:nowrap;line-height:1}
+.widget-toggle.widget-toggle-text br{display:block}
+.widget-toggle.widget-toggle-text:has(br){font-size:10px;line-height:1.08;white-space:normal}
+.widget-toggle:hover{background:#f3f5f8;color:#293547}.widget-toggle.active{background:#eef2ff;color:var(--accent);border-color:#dfe5ff}
+/* 지금 페이지에서 못 쓰는 위젯 버튼 — 회색 처리, 마우스 올려도 반응 없음, 클릭도 안 됨(native disabled). */
+.widget-toggle:disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
+.widget-toggle:disabled:hover{background:transparent!important;color:#707a8b!important}
+.widget-toggle svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.widget-drawer{position:fixed;right:var(--rail-w);top:var(--header-h);bottom:0;width:min(var(--drawer-w),calc(100vw - var(--rail-w)));z-index:44;background:white;border-left:1px solid var(--line);box-shadow:-20px 0 44px rgba(23,32,51,.10);transform:translateX(calc(100% + var(--rail-w)));transition:transform .22s cubic-bezier(.2,.75,.25,1);display:flex;flex-direction:column}
+body.has-subnav .widget-drawer{top:calc(var(--header-h) + var(--subnav-h))}.widget-drawer.open{transform:translateX(0)}
+.widget-drawer-head{height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 18px 0 22px;border-bottom:1px solid var(--line)}.widget-kicker{font-size:9px;font-weight:900;letter-spacing:.16em;color:#a1a8b4}.widget-drawer-head h2{font-size:18px;margin:4px 0 0;letter-spacing:-.03em}.widget-close{width:34px;height:34px;border:0;background:#f5f7fa;border-radius:10px;font-size:24px;line-height:1;color:#657083;cursor:pointer}.widget-close:hover{background:#eceff4;color:#273244}.widget-drawer-body{padding:20px 22px;overflow:auto;color:#596476;font-size:14px;line-height:1.7}.widget-empty{border:1px dashed #d9dfe8;background:#fafbfd;border-radius:15px;padding:18px}.widget-empty strong{display:block;color:#293547;margin-bottom:6px}.widget-empty p{margin:0}
+.modal-backdrop{position:fixed;inset:0;z-index:100;background:rgba(17,24,39,.42);backdrop-filter:blur(5px);display:grid;place-items:center;padding:24px}.auth-modal{width:min(430px,100%);background:white;border-radius:22px;padding:30px;box-shadow:0 30px 80px rgba(10,18,32,.24);position:relative}.modal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border:0;background:#f4f6f9;border-radius:10px;font-size:23px;color:#667184;cursor:pointer}.modal-brand{font-size:13px;font-weight:900;color:var(--accent);letter-spacing:.05em}.auth-modal h2{margin:12px 0 8px;font-size:28px;letter-spacing:-.04em}.auth-modal>p{margin:0;color:#7b8495;line-height:1.6;font-size:14px}.auth-modal form{display:grid;gap:14px;margin-top:24px}.auth-modal label{display:grid;gap:7px}.auth-modal label span{font-size:12px;font-weight:800;color:#4d5869}.auth-modal input{height:46px;border:1px solid #dce2ea;border-radius:11px;padding:0 13px;outline:none}.auth-modal input:focus{border-color:#8ca3ee;box-shadow:0 0 0 3px rgba(49,87,213,.09)}.modal-submit{height:48px;border:0;border-radius:11px;background:#202a3c;color:white;font-weight:800;cursor:pointer;margin-top:4px}.prototype-note{margin-top:16px!important;padding-top:15px;border-top:1px solid var(--line);font-size:11px!important;color:#9aa2af!important}
+@media(max-width:900px){.header-inner{padding-left:18px;padding-right:66px;gap:16px}.brand-text{display:none}.primary-nav-item{padding:0 12px}.subnav-inner{padding-left:18px;padding-right:66px}.section-context{display:none}.secondary-nav{gap:16px;overflow:auto}.home-view{padding-left:24px;padding-right:24px}.home-grid{grid-template-columns:1fr}.account-area .link-button{display:none}}
+@media(max-width:620px){:root{--header-h:62px;--subnav-h:50px;--rail-w:48px}.header-inner{padding-left:12px;padding-right:55px;gap:8px}.brand-mark{width:32px;height:32px}.primary-nav-item{font-size:14px;padding:0 9px}.signup-button{padding:0 10px;height:36px}.subnav-inner{padding-left:14px;padding-right:55px}.secondary-nav{gap:14px}.secondary-nav button{font-size:13px}.home-copy h1{font-size:38px}.home-copy p{font-size:15px}.home-actions{flex-direction:column;align-items:stretch}.feature-card{grid-template-columns:48px 1fr auto;padding:18px}.feature-icon{width:48px;height:48px}.widget-toggle{width:36px;height:36px}.widget-rail{padding-left:5px;padding-right:5px}.widget-drawer{right:var(--rail-w);width:calc(100vw - var(--rail-w))}}
+
+/* LOCAL AUTH PATCH 001 */
+.auth-modal{width:min(460px,100%);max-height:min(760px,calc(100vh - 32px));overflow:auto;padding:30px 32px}
+/* 눌렀는지 안 눌렀는지 헷갈리지 않게 — 로그인 모달 안 버튼은 전부 누르는 순간 색을 반전한다. */
+.auth-modal button:active{filter:invert(1)}
+.auth-brand-row{display:flex;align-items:center;gap:9px;margin-bottom:14px}.auth-brand-mark{width:30px;height:30px;border-radius:9px;background:#172033;color:#fff;display:grid;place-items:center;font-size:14px;font-weight:900}.local-badge{margin-left:auto;border:1px solid #dfe5ee;background:#f6f8fb;color:#7a8495;border-radius:999px;padding:4px 8px;font-size:9px;font-weight:900;letter-spacing:.12em}.auth-lang-row{display:flex;justify-content:flex-end;margin-bottom:6px}.auth-lang-select{height:30px;border:1px solid #dfe5ee;background:#f6f8fb;color:#4d5869;border-radius:9px;padding:0 8px;font-size:12px;font-weight:800;cursor:pointer}.auth-modal h2{margin-top:0}.auth-message{margin:16px 0 -6px;border-radius:11px;padding:11px 12px;font-size:12px;line-height:1.55;background:#f4f7ff;border:1px solid #dde5ff;color:#3450a5}.auth-message.error{background:#fff5f5;border-color:#ffdada;color:#a63b3b}.auth-message.success{background:#f2fbf6;border-color:#d4f1df;color:#28704a}.auth-modal form{margin-top:22px}.auth-modal form>div>label{display:grid;gap:7px}.auth-links{display:grid;grid-template-columns:1fr 1px 1fr;align-items:center;margin-top:14px}.auth-links span{height:14px;background:var(--line)}.auth-links button,.small-action{border:0;background:transparent;color:#657083;font-size:12px;font-weight:700;cursor:pointer;padding:7px}.auth-links button:hover,.small-action:hover{color:#2f54ca}.verify-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:2px;margin-top:12px}.auth-divider{display:flex;align-items:center;gap:12px;color:#9aa3b1;font-size:11px;margin:20px 0 14px}.auth-divider::before,.auth-divider::after{content:"";height:1px;background:var(--line);flex:1}.google-button{width:100%;height:48px;border:1px solid #dce2ea;background:#fff;border-radius:11px;display:grid;grid-template-columns:28px 1fr auto;align-items:center;padding:0 12px;font-weight:800;cursor:pointer;color:#273244}.google-button:hover{background:#fafbfc;border-color:#cfd6e1}.google-g{width:25px;height:25px;border:1px solid #dfe3ea;border-radius:50%;display:grid;place-items:center;font-family:Arial,sans-serif;font-weight:900;color:#4285f4}.google-button small{font-size:9px;color:#9aa2af;border:1px solid #e3e7ed;border-radius:999px;padding:3px 6px}.local-mailbox{margin-top:16px;border:1px solid #dce3ee;background:#f9fbff;border-radius:14px;padding:14px}.mailbox-head{display:flex;align-items:center;justify-content:space-between}.mailbox-head strong{font-size:12px}.mailbox-head button{width:28px;height:28px;border:0;border-radius:8px;background:#eef2f7;color:#677286;font-size:18px;cursor:pointer}.local-mailbox>p{font-size:11px!important;line-height:1.55!important;margin:8px 0 10px!important;color:#788295!important}.mail-card{background:#fff;border:1px solid #e2e7ef;border-radius:10px;padding:12px;font-size:12px;color:#596476;line-height:1.6}.mail-card .mail-code{font-size:26px;font-weight:900;letter-spacing:.18em;color:#1f2b41;margin:7px 0}.mail-card .mail-meta{font-size:10px;color:#98a1af}.prototype-note code{background:#f3f5f8;border-radius:5px;padding:2px 4px}.account-chip{max-width:220px}.account-chip .account-email{max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* LOCAL AUTH FLOW PATCH 002 */
+.account-nav-button{height:36px;padding:0 10px;border:0;background:transparent;border-radius:9px;color:#5f697b;font-size:12px;font-weight:800;cursor:pointer}.account-nav-button:hover{background:#f2f4f8;color:#253146}.logout-button{font-size:12px}.account-view{height:100%;overflow:auto;background:linear-gradient(180deg,#f8faff 0,#f5f7fb 100%);padding:42px 72px 70px}.account-page-shell{max-width:1180px;margin:0 auto}.account-page-shell.narrow{max-width:860px}.account-page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:28px}.account-page-head h1{font-size:34px;letter-spacing:-.045em;margin:8px 0 8px}.account-page-head p{margin:0;color:#788295;font-size:14px}.account-badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.account-badges span{padding:7px 10px;border:1px solid #dde3ed;background:#fff;border-radius:999px;font-size:11px;font-weight:850;color:#596579}.classroom-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.classroom-card{min-height:210px;border:1px solid #e0e5ed;background:#fff;border-radius:20px;padding:24px;text-align:left;display:flex;flex-direction:column;align-items:flex-start;box-shadow:0 12px 34px rgba(30,43,71,.05);cursor:pointer;transition:.18s ease}.classroom-card:hover{transform:translateY(-2px);border-color:#cfd7e6;box-shadow:0 18px 42px rgba(30,43,71,.09)}.classroom-card-kicker{font-size:10px;letter-spacing:.16em;font-weight:900;color:#8a94a6}.classroom-card strong{font-size:23px;margin-top:15px;letter-spacing:-.035em}.classroom-card small{font-size:13px;line-height:1.6;color:#7b8596;margin-top:8px}.classroom-card-action{margin-top:auto;padding-top:28px;font-size:12px;font-weight:850;color:#3157d5}.classroom-notice{margin-top:18px;background:#fff;border:1px solid #e3e7ee;border-radius:16px;padding:16px 18px;display:flex;gap:12px;align-items:flex-start;font-size:12px;line-height:1.6;color:#758093}.classroom-notice strong{white-space:nowrap;color:#445065}.profile-panel{background:#fff;border:1px solid #e0e5ed;border-radius:20px;padding:26px;box-shadow:0 12px 34px rgba(30,43,71,.05);display:grid;grid-template-columns:64px 1fr;gap:18px}.profile-avatar{width:64px;height:64px;border-radius:19px;background:#172033;color:#fff;display:grid;place-items:center;font-size:26px;font-weight:900}.profile-main{display:flex;flex-direction:column;gap:5px;justify-content:center}.profile-main strong{font-size:20px}.profile-main span{font-size:13px;color:#818b9b}.profile-list{grid-column:1/-1;margin:8px 0 0;border-top:1px solid #edf0f4}.profile-list div{display:grid;grid-template-columns:160px 1fr;gap:18px;padding:15px 4px;border-bottom:1px solid #edf0f4}.profile-list dt{font-size:12px;font-weight:800;color:#7a8494}.profile-list dd{margin:0;font-size:13px;font-weight:750;color:#303b4e}
+@media(max-width:900px){.account-view{padding:32px 68px 56px 24px}.classroom-grid{grid-template-columns:1fr}.account-page-head{flex-direction:column}.account-badges{justify-content:flex-start}.account-area .account-nav-button{display:none}}
+@media(max-width:620px){.account-view{padding:26px 58px 44px 16px}.account-page-head h1{font-size:28px}.classroom-card{min-height:180px;padding:20px}.classroom-notice{flex-direction:column}.profile-panel{grid-template-columns:52px 1fr;padding:20px}.profile-avatar{width:52px;height:52px;border-radius:16px}.profile-list div{grid-template-columns:110px 1fr}.account-chip .account-email{display:none}.account-chip{padding:0 5px}.logout-button{display:none}}
+
+/* SLIDING MASTER/SUB MENU PATCH 005 */
+:root{--header-h:60px}
+.site-header{height:var(--header-h)}
+.header-inner{padding:0 68px 0 24px;gap:18px}
+.brand{padding-right:6px}.brand-mark{width:32px;height:32px;border-radius:9px}.brand-text{font-size:20px}
+.primary-nav{display:flex;align-items:center;gap:8px;height:100%;min-width:0;overflow:visible}
+.nav-cluster{height:100%;display:flex;align-items:center;min-width:max-content}
+.master-nav-item{height:38px;padding:0 14px;border:0;border-radius:10px;background:transparent;font-weight:800;font-size:14px;color:#505a6c;cursor:pointer;transition:background .16s ease,color .16s ease,transform .16s ease;white-space:nowrap}
+.master-nav-item:hover{background:#f2f4f8;color:#1e293b}
+.master-nav-item.active{background:#eef2ff;color:#3157d5}
+.nav-cluster[data-nav-cluster="topik"] .master-nav-item.active{background:#172033;color:#fff}
+.inline-subnav{display:flex;align-items:center;gap:5px;max-width:0;opacity:0;overflow:hidden;transform:translateX(-12px);margin-left:0;pointer-events:none;white-space:nowrap;transition:max-width .28s cubic-bezier(.2,.78,.24,1),opacity .15s ease,transform .24s cubic-bezier(.2,.78,.24,1),margin-left .24s ease}
+.nav-cluster.open .inline-subnav{max-width:430px;opacity:1;transform:translateX(0);margin-left:4px;pointer-events:auto}
+.sub-nav-item{height:34px;padding:0 11px;border:1px solid transparent;border-radius:9px;background:transparent;color:#697386;font-size:13px;font-weight:800;cursor:pointer;transition:background .15s ease,color .15s ease,border-color .15s ease,transform .15s ease}
+.sub-nav-item:hover{background:#f2f4f8;color:#263244}
+.sub-nav-item.active{background:#172033;color:#fff;border-color:#172033;box-shadow:0 5px 14px rgba(23,32,51,.14)}
+.subnav-wrap{display:none!important}
+.workspace{height:calc(100vh - var(--header-h))!important}
+.widget-rail,.widget-drawer{top:var(--header-h)!important}
+.module-status{display:none!important}
+.placeholder-view{inset:0}
+#moduleFrame{height:100%}
+[hidden]{display:none!important}
+@media(max-width:1050px){.header-inner{gap:10px;padding-left:16px}.brand-text{display:none}.master-nav-item{padding:0 10px}.sub-nav-item{padding:0 9px}.account-chip .account-email{display:none}.account-chip{padding:0 5px}}
+@media(max-width:760px){:root{--header-h:56px}.header-inner{padding-left:10px;padding-right:52px;gap:4px}.primary-nav{gap:2px}.master-nav-item{font-size:13px;padding:0 8px}.nav-cluster.open .inline-subnav{max-width:310px}.sub-nav-item{height:32px;font-size:12px;padding:0 7px}.account-area{gap:2px}.account-nav-button{display:none}.signup-button{padding:0 9px}}
+
+
+/* COMPACT DROPDOWN MENU PATCH 006 */
+:root{--header-h:54px}
+.site-header{height:var(--header-h);overflow:visible}
+.header-inner{padding:0 64px 0 16px;gap:14px}
+.brand{gap:8px;padding:4px 4px 4px 0}
+.brand-mark{width:30px;height:30px;border-radius:8px;font-size:15px}
+.brand-text{font-size:18px}
+.primary-nav{gap:3px;overflow:visible}
+.nav-cluster{position:relative;height:100%;display:flex;align-items:center;min-width:0}
+.master-nav-item{height:34px;padding:0 11px;border-radius:8px;font-size:13px}
+.inline-subnav{
+  position:absolute;
+  left:0;
+  top:calc(100% - 3px);
+  z-index:80;
+  display:flex;
+  align-items:center;
+  gap:4px;
+  width:max-content;
+  max-width:none;
+  margin:0;
+  padding:6px;
+  border:1px solid #e4e8ef;
+  border-radius:10px;
+  background:rgba(255,255,255,.98);
+  box-shadow:0 10px 28px rgba(23,32,51,.12);
+  opacity:0;
+  visibility:hidden;
+  overflow:visible;
+  transform:translateY(-7px);
+  pointer-events:none;
+  white-space:nowrap;
+  transition:opacity .14s ease,transform .18s cubic-bezier(.2,.78,.24,1),visibility 0s linear .18s;
+}
+.nav-cluster.open .inline-subnav{
+  max-width:none;
+  margin:0;
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+  pointer-events:auto;
+  transition-delay:0s;
+}
+.sub-nav-item{height:31px;padding:0 10px;border-radius:7px;font-size:12px}
+.sub-nav-item.active{box-shadow:none}
+.workspace{height:calc(100vh - var(--header-h))!important}
+.widget-rail,.widget-drawer{top:var(--header-h)!important}
+@media(max-width:1050px){.header-inner{padding-left:12px;gap:8px}.brand-text{display:none}.master-nav-item{padding:0 9px}}
+@media(max-width:760px){:root{--header-h:52px}.header-inner{padding-left:8px;padding-right:50px;gap:2px}.master-nav-item{height:32px;font-size:12px;padding:0 7px}.sub-nav-item{height:29px;font-size:11px;padding:0 7px}.inline-subnav{padding:5px;gap:2px}}
+
+
+/* PATCH 008: compact header title + role management */
+.header-inner{position:relative}
+/* 좌측 메뉴와 우측 계정영역 사이의 남는 공간을 채우며 그 안에서 가운데 정렬.
+   창이 줄어도 겹치지 않고 말줄임 처리된다(절대좌표 아님). */
+.header-page-title{
+  flex:1 1 auto;min-width:0;text-align:center;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-size:15px;font-weight:850;letter-spacing:-.025em;color:#1f2937;
+  pointer-events:none;
+}
+.header-page-badge{
+  display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;
+  padding:5px 16px;border-radius:999px;background:#eef2ff;color:#3049b0;
+}
+/* Sub menus are hover previews only. After selection they disappear. */
+.nav-cluster:not(.open) .inline-subnav{opacity:0;visibility:hidden;pointer-events:none}
+/* The selected module name is now in the centered header, so don't spend a row on it. */
+.module-status{display:none!important}
+.placeholder-view{inset:0}
+
+.admin-panel{height:100%;overflow:auto;background:#f7f8fa;padding:14px 68px 24px 18px}
+.admin-panel-toolbar{height:38px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;color:#6b7280;font-size:12px;font-weight:800}
+.admin-panel-toolbar button{height:30px;padding:0 11px;border:1px solid #dfe3e8;border-radius:8px;background:#fff;color:#4b5563;font-weight:750;cursor:pointer}
+.admin-user-list{border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;background:#fff}
+.admin-user-row{display:grid;grid-template-columns:78px minmax(190px,1.8fr) minmax(120px,1fr) 110px 110px 100px;align-items:center;gap:10px;min-height:50px;padding:7px 12px;border-bottom:1px solid #eef0f2;font-size:13px}
+.admin-user-row:last-child{border-bottom:0}
+.admin-user-row.header{min-height:36px;background:#fafbfc;color:#8a93a2;font-size:11px;font-weight:800}
+.admin-user-main{min-width:0}.admin-user-main strong,.admin-user-main span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.admin-user-main span{font-size:11px;color:#8a93a2;margin-top:2px}
+.admin-role-select{height:32px;border:1px solid #dfe3e8;border-radius:8px;background:#fff;padding:0 8px;font-weight:750;color:#374151}
+.admin-user-save{height:32px;border:0;border-radius:8px;background:#1f2937;color:#fff;font-weight:800;cursor:pointer}
+.admin-user-save:disabled{opacity:.45;cursor:default}
+.admin-fixed{font-size:11px;color:#6b7280;font-weight:800}
+.admin-empty{padding:32px;text-align:center;color:#8a93a2}
+.grammar-admin-row{padding:12px 14px;border-bottom:1px solid #eef0f2}
+.grammar-admin-row:last-child{border-bottom:0}
+.grammar-admin-label{font-size:13px;font-weight:900;color:#1f2937;margin-bottom:6px}
+.grammar-admin-examples{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.grammar-admin-examples li{font-size:12px;color:#4b5563;line-height:1.5}
+.grammar-chunk-unreg-ex{color:#dc2626;font-weight:800}
+.grammar-admin-vid{color:#9aa3b1;font-size:10.5px}
+/* 문법리스트: 안에 따로 스크롤 박스를 만들지 않고, 화면 전체(.account-view) 스크롤 하나로 통일 —
+   불필요한 위 여백도 같이 줄인다(공용 .account-view/.admin-panel 여백이 이 화면엔 과했다). */
+#grammarAdminView.account-view{padding:16px 24px 24px}
+#grammarAdminView .admin-panel{height:auto;overflow:visible;padding:0}
+/* 문법리스트 목록: 강의/유튜브ID/타임스탬프/자막 4칸을 고정 폭 grid로 맞춰서 세로줄이 반듯하게 정렬되게 한다 */
+.grammar-flat-row-grid{display:grid!important;grid-template-columns:96px 120px 68px 1fr;gap:8px;align-items:center}
+.grammar-flat-header{position:sticky;top:0;z-index:2;background:#fff;border-bottom:2px solid #e5e7eb;padding:8px 4px;font-size:11px;font-weight:800;color:#8a93a2}
+.grammar-flat-header span{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.grammar-admin-sort-arrow{border:1px solid #d5dbe4;background:#fff;color:#9aa3b1;border-radius:6px;width:22px;height:20px;font-size:11px;font-weight:900;cursor:pointer;line-height:1}
+.grammar-admin-sort-arrow:hover{background:#eef1ff;color:#2f54ca}
+.grammar-admin-sort-arrow.on{background:#2f54ca;border-color:#2f54ca;color:#fff}
+.grammar-admin-update-btn,.grammar-admin-basic-btn{height:24px;padding:0 9px;border:1px solid #dfe3e8;border-radius:7px;background:#fff;color:#4b5563;font-weight:750;font-size:11px;cursor:pointer}
+.grammar-admin-update-btn:hover,.grammar-admin-basic-btn:hover{background:#f6f8fb}
+.grammar-admin-basic-btn.on{background:#111827;border-color:#111827;color:#fff}
+/* 강의/유튜브를 문법리스트 옆에 붙여서 보여주는 분할 화면 — 따로 스크롤 박스를 두지 않고
+   화면 전체(.account-view) 스크롤 하나로 같이 움직이게 한다. 그 대신 iframe에 넉넉한 고정
+   높이를 줘서 그 안에서 또 스크롤이 생기지 않게 한다. */
+.grammar-admin-split{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+.grammar-admin-split-list{min-width:0}
+.grammar-admin-split-detail{min-width:0;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;background:#fff}
+.grammar-admin-detail-head{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid #eef0f2;font-size:12px;font-weight:800;color:#374151;background:#fff}
+.grammar-admin-detail-head button{width:26px;height:26px;border:0;border-radius:7px;background:#f4f6f9;color:#657083;font-size:16px;line-height:1;cursor:pointer}
+.grammar-admin-detail-head button:hover{background:#eceff4}
+.grammar-admin-split-detail iframe{display:block;width:100%;border:0;height:1900px}
+@media(max-width:900px){.header-page-title{display:none}.admin-panel{padding-left:10px}.admin-user-row{grid-template-columns:70px minmax(180px,1.5fr) 115px 90px 90px}.admin-user-row>*:nth-child(5){display:none}}
+
+
+/* LOCAL login convenience */
+.remember-id-row{display:flex!important;align-items:center!important;gap:8px!important;grid-template-columns:none!important;cursor:pointer;width:max-content;margin-top:-4px;color:#657083}.remember-id-row input{width:16px!important;height:16px!important;margin:0!important;accent-color:#3157d5;box-shadow:none!important}.remember-id-row span{font-size:12px!important;font-weight:700!important;color:#657083!important}.remember-id-row:hover span{color:#2f54ca!important}
+
+
+/* ===== KorEdu Widget Workspace v2: multi / single ===== */
+:root{--widget-workspace-w:460px}
+body.grammar-wide-widgets{--widget-workspace-w:calc(100vw - var(--rail-w) - 12px)}
+.widget-drawer{display:none!important}
+body.widget-workspace-open .workspace{padding-right:calc(var(--rail-w) + var(--widget-workspace-w));transition:padding-right .18s ease}
+.widget-workspace{
+  position:fixed;right:var(--rail-w);top:var(--header-h);bottom:0;width:var(--widget-workspace-w);
+  z-index:43;background:#f5f7fb;border-left:1px solid var(--line);padding:10px;overflow:hidden;
+  box-shadow:-14px 0 36px rgba(23,32,51,.06)
+}
+.widget-workspace[hidden]{display:none!important}
+.widget-splitter{
+  position:fixed;right:calc(var(--rail-w) + var(--widget-workspace-w) - 4px);top:var(--header-h);bottom:0;width:8px;
+  z-index:46;cursor:col-resize;background:transparent;touch-action:none
+}
+.widget-splitter::after{content:"";position:absolute;left:3px;top:0;bottom:0;width:2px;background:transparent;transition:background .15s}
+.widget-splitter:hover::after,body.widget-resizing .widget-splitter::after{background:#9db2f3}
+body.widget-resizing{cursor:col-resize!important;user-select:none!important}
+body.widget-resizing iframe{pointer-events:none!important}
+
+
+.widget-rail-group{width:100%;display:flex;flex-direction:column;align-items:center;gap:7px}
+.widget-rail-group-label{font-size:7px;line-height:1;font-weight:900;letter-spacing:.08em;color:#a1a8b4;margin:1px 0 2px;user-select:none}
+.widget-rail-divider{width:38px;height:2px;border-radius:2px;background:var(--accent);opacity:.55;margin:5px 0;flex:0 0 auto}
+.widget-rail-divider-strong{margin:16px 0 14px;background:var(--accent);opacity:1;height:3px}
+.widget-rail-item{position:relative;width:40px;min-height:38px;display:grid;place-items:center}
+.widget-rail-item .widget-toggle{position:relative;z-index:1}
+.widget-multi-check{
+  position:absolute;left:-2px;top:-1px;z-index:3;width:14px;height:14px;margin:0;accent-color:var(--accent);cursor:pointer;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.08))
+}
+.widget-single-item::before{content:"";display:none}
+.widget-rail-item[data-widget-code]::after{
+  content:attr(data-widget-code);position:absolute;right:-2px;bottom:-2px;z-index:2;padding:1px 3px;border-radius:5px;
+  background:#fff;border:1px solid #e2e7ef;color:#9aa3b1;font-size:7px;font-weight:900;line-height:1.2;pointer-events:none
+}
+.widget-rail-item[data-widget-code]:has(.widget-toggle.active)::after{background:#eef2ff;border-color:#d8e0ff;color:var(--accent)}
+/* 지금 메인 화면이 이미 보여주고 있는 것(영상 목록/교재 목록)과 같은 위젯은 중복이라 체크박스만
+   비활성화한다 — "영상"/"교재" 글자·이동 버튼은 그대로 눌려야 하니 항목 전체는 흐리게 하지 않는다. */
+.widget-multi-check:disabled{opacity:.35;cursor:not-allowed}
+
+/* 영상/교재 이동 버튼 + 왼쪽 서브메뉴 (상단 메뉴 미러) */
+.widget-nav-item .widget-toggle{color:#51607a}
+.widget-nav-flyout{
+  position:absolute;right:calc(100% + 6px);top:50%;transform:translateY(-50%) scale(.96);
+  transform-origin:right center;display:flex;flex-direction:column;gap:2px;padding:5px;
+  background:#fff;border:1px solid #dbe1ea;border-radius:10px;box-shadow:0 10px 30px rgba(15,23,42,.18);
+  opacity:0;visibility:hidden;pointer-events:none;transition:.12s ease;z-index:60;white-space:nowrap
+}
+.widget-nav-item:hover .widget-nav-flyout,.widget-nav-item:focus-within .widget-nav-flyout,
+.widget-nav-item.nav-open .widget-nav-flyout{
+  opacity:1;visibility:visible;pointer-events:auto;transform:translateY(-50%) scale(1)
+}
+.widget-nav-flyout button{
+  border:0;background:transparent;color:#39424f;font:inherit;font-size:12px;font-weight:700;
+  text-align:left;padding:6px 12px;border-radius:7px;cursor:pointer
+}
+.widget-nav-flyout button:hover{background:#eef2ff;color:var(--accent)}
+/* 지금 보고 있는 것과 같은 하위 항목(예: 유튜브 화면에서 "유튜브")은 자기 자신 중복이라 비활성화 —
+   회색 처리 + 클릭/호버 반응 없음. */
+.widget-nav-flyout button:disabled{opacity:.4;cursor:not-allowed;pointer-events:none}
+.widget-nav-flyout button:disabled:hover{background:transparent!important;color:#39424f!important}
+
+.widget-multi-grid{
+  height:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-flow:row dense;grid-auto-rows:minmax(180px,auto);
+  gap:10px;overflow:auto;padding-right:2px;align-content:start
+}
+.widget-multi-grid[hidden]{display:none!important}
+.widget-single-stage{height:100%;overflow:hidden}
+.widget-single-stage[hidden]{display:none!important}
+.widget-panel{background:#fff;border:1px solid #dfe5ee;border-radius:14px;overflow:hidden;box-shadow:0 5px 16px rgba(23,32,51,.04);min-height:180px}
+.widget-panel.multi{min-width:0;resize:vertical;overflow:hidden;align-self:start;height:280px;max-height:calc(100vh - var(--header-h) - 24px)}
+.widget-panel.multi.size-half{grid-column:span 1}
+.widget-panel.multi.size-full{grid-column:1 / -1}
+.widget-panel.multi.drag-over{outline:2px solid #87a1ef;outline-offset:2px;background:#f9fbff}
+.widget-panel.multi.dragging{opacity:.48}
+.widget-panel.single{height:100%;min-height:100%;border-radius:14px}
+.widget-panel-head{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 10px;border-bottom:1px solid #edf0f4;background:#fff}
+.widget-panel-title{display:flex;align-items:center;gap:7px;min-width:0;flex:1}
+.widget-panel-drag{width:24px;height:28px;border:0;background:transparent;color:#9aa3b1;border-radius:8px;display:grid;place-items:center;cursor:grab;font-size:15px;line-height:1;letter-spacing:-2px;padding:0}
+.widget-panel-drag:hover{background:#f3f5f8;color:#596578}.widget-panel-drag:active{cursor:grabbing}
+.widget-panel-title span{font-size:9px;letter-spacing:.08em;font-weight:900;color:#8b95a6}
+.widget-panel-title strong{font-size:14px;color:#253047;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.widget-panel-actions{display:flex;align-items:center;gap:4px}
+.widget-size-toggle{min-width:30px;height:30px;border:0;border-radius:9px;background:#f3f5f8;color:#667287;font-size:11px;font-weight:900;cursor:pointer;padding:0 8px}
+.widget-size-toggle:hover{background:#e9edf3;color:#283447}
+.widget-panel-close{width:30px;height:30px;border:0;border-radius:9px;background:#f3f5f8;color:#748094;font-size:20px;line-height:1;cursor:pointer}
+.widget-panel-close:hover{background:#e9edf3;color:#283447}
+.widget-panel-body{height:calc(100% - 48px);overflow:auto;padding:12px}
+.widget-panel .widget-empty{height:100%;border:1px dashed #d8dfe9;background:#fafbfd;border-radius:11px;padding:14px}
+.widget-panel .widget-empty strong{display:block;color:#273349;font-size:13px;margin-bottom:5px}
+.widget-panel .widget-empty p{margin:0;color:#657186;font-size:12px;line-height:1.6}
+.widget-panel .widget-empty small{display:block;margin-top:12px;color:#9aa3b1;font-size:9px;font-weight:800;letter-spacing:.03em}
+
+@media(max-width:900px){
+  :root{--widget-workspace-w:42vw}
+  body.widget-workspace-open .workspace{padding-right:calc(var(--rail-w) + var(--widget-workspace-w))}
+  .widget-workspace{width:var(--widget-workspace-w)}
+}
+
+@media(max-width:760px){.widget-multi-grid{grid-template-columns:1fr}.widget-panel.multi.size-half,.widget-panel.multi.size-full{grid-column:1 / -1}}
+
+/* ===== W01 Video vocabulary ===== */
+.widget-panel[data-widget-panel="word"] .widget-panel-body{padding:10px;background:#fbfcfe}
+.word-widget-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px;min-width:0}
+.word-widget-meta{display:flex;align-items:center;gap:6px;min-width:0;color:#556177;font-size:10px;white-space:nowrap}
+.word-widget-meta strong{font-size:10px;color:#667287}
+.word-api-ready,.word-api-missing{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:999px;font-size:8px;font-weight:900;letter-spacing:.03em}
+.word-api-ready{background:#eaf8ef;color:#21814c;border:1px solid #c9ecd6}
+.word-api-missing{background:#fff3e7;color:#ae671c;border:1px solid #f1d3b2}
+.word-widget-tools{display:flex;align-items:center;gap:5px;min-width:0}
+.word-widget-tools select,.word-widget-tools button{height:29px;border:1px solid #dfe5ee;border-radius:8px;background:#fff;color:#566176;font-size:10px;font-weight:800;outline:none}
+.word-widget-tools select{padding:0 21px 0 7px;cursor:pointer}
+.word-widget-tools button{padding:0 8px;cursor:pointer;white-space:nowrap}
+.word-widget-tools button:hover{background:#f2f5f9;color:#273349}
+.word-widget-tools .word-generate-btn{border-color:#c9d7ff;background:#eef3ff;color:#3157d5}
+.word-widget-tools .word-generate-btn:hover{background:#e3ebff}
+.word-widget-tools button:disabled{opacity:.5;cursor:default}
+/* ── W15 문장 위젯 ── */
+.sent-head-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sent-check-all{display:flex;align-items:center;gap:3px;font-size:11px;font-weight:700;color:#5a6473;cursor:pointer;white-space:nowrap}
+.sent-btn{border:1px solid #cfd7e2;background:#fff;color:#3f4c63;border-radius:7px;padding:4px 9px;font:inherit;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap}
+.sent-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.sent-btn:disabled{opacity:.45;cursor:default}
+.sent-widget{padding:10px;display:flex;flex-direction:column;gap:8px}
+.sent-add{display:flex;align-items:center;gap:6px;padding:8px;background:#f6f8fa;border:1px dashed #d8dfe9;border-radius:10px}
+.sent-add-input{flex:1;min-width:0;height:32px;border:1px solid #cfd7e2;border-radius:7px;padding:0 9px;font:inherit;font-size:13px}
+.sent-empty{padding:22px 12px;text-align:center;color:#8a93a3;font-size:12px}
+.sent-list{display:flex;flex-direction:column;gap:6px}
+.sent-row{display:flex;flex-direction:column;gap:4px;padding:6px 8px;border:1px solid #e3e7ee;border-radius:9px;background:#fff}
+.sent-row-main{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.sent-translation{font-size:12px;color:#7b8596;padding-left:63px}
+.sent-row-check{cursor:pointer}
+.sent-mic-btn{width:28px;height:28px;flex:0 0 auto;border:1px solid #cfd7e2;background:#fff;border-radius:999px;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.sent-mic-btn:hover{border-color:var(--accent);color:var(--accent)}
+.sent-mic-btn.is-rec{background:#e0483b;border-color:#e0483b;color:#fff;animation:sentRecPulse 1s ease-in-out infinite}
+@keyframes sentRecPulse{0%,100%{opacity:1}50%{opacity:.55}}
+.sent-text{flex:1;min-width:120px;height:30px;border:1px solid #e0e5ed;border-radius:7px;padding:0 8px;font:inherit;font-size:13px}
+.sent-listen-btn{width:28px;height:28px;padding:0;border-radius:999px}
+.sent-audio{height:28px;max-width:180px}
+.word-widget-empty{min-height:120px;border:1px dashed #d8dfe9;background:#fff;border-radius:11px;padding:14px;display:flex;flex-direction:column;justify-content:center}
+.word-widget-empty.compact{min-height:108px}
+.word-widget-empty strong{font-size:13px;color:#2c374c;margin-bottom:5px}
+.word-widget-empty p{margin:0;color:#758095;font-size:11px;line-height:1.55}
+.word-widget-loading{min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#68748a}
+.word-widget-loading>span{width:22px;height:22px;border:2px solid #d9e1f5;border-top-color:#3157d5;border-radius:50%;animation:w01spin .75s linear infinite;margin-bottom:9px}
+.word-widget-loading strong{font-size:12px;color:#354158}
+.word-widget-loading p{font-size:10px;margin:5px 0 0;line-height:1.45;color:#8791a3}
+@keyframes w01spin{to{transform:rotate(360deg)}}
+.word-chip-grid{display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start;align-items:flex-start}
+.widget-panel[data-widget-panel="word"].size-full .word-chip-grid{display:flex}
+.word-chip{position:relative;min-width:0;max-width:240px;min-height:30px;border:1.25px solid #80c88f;border-radius:7px;background:#fff;display:inline-grid;grid-template-columns:20px minmax(0,max-content) auto;align-items:center;gap:3px;padding:3px 6px 3px 3px;cursor:pointer;transition:border-color .12s,background .12s,box-shadow .12s;outline:none}
+.word-chip:hover,.word-chip:focus-visible{background:#f4fbf5;border-color:#4eaf64;box-shadow:0 2px 8px rgba(42,126,61,.09)}
+.word-chip-speaker{width:20px;height:20px;border:0;background:transparent;border-radius:6px;display:grid;place-items:center;padding:0;cursor:pointer;font-size:10px}
+.word-chip-speaker:hover{background:#e8f5eb}
+.word-chip-text{min-width:0;display:flex;flex-direction:column;gap:1px}
+.word-chip-text strong{font-size:11px;line-height:1.1;color:#263246;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.word-chip-text span{font-size:8px;line-height:1.1;color:#7b879a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.word-chip small{align-self:center;margin-left:2px;font-size:7px;font-weight:900;color:#9aa5b5;letter-spacing:.02em}
+.word-widget-foot{text-align:right;margin-top:6px;color:#9aa4b5;font-size:8px;font-weight:700}
+@media(max-width:900px){.word-widget-toolbar{align-items:flex-start;flex-direction:column}.word-widget-tools{width:100%}.word-widget-tools .word-generate-btn{margin-left:auto}}
+
+/* W01 staged pipeline + W07 API settings */
+.word-widget-toolbar.pipeline{align-items:flex-start;flex-wrap:wrap;margin-bottom:6px}
+.pipeline-tools{flex-wrap:wrap;justify-content:flex-end}
+.pipeline-tools button{height:28px;padding:0 8px;font-size:9px}
+.pipeline-tools .word-ai-btn{border-color:#d8dff5;background:#f6f8ff;color:#425bc1}
+.pipeline-tools .word-excel-btn{border-color:#b9dfc4;background:#f1fbf4;color:#2d7b45}
+.pipeline-tools .word-excel-btn:hover{background:#e7f7ec;color:#226338}
+.word-stage-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin:0 0 9px}
+.word-stage{display:inline-flex;align-items:center;min-height:20px;padding:0 6px;border:1px solid #e1e6ee;border-radius:999px;background:#f8f9fb;color:#8a94a7;font-size:8px;font-weight:800;white-space:nowrap}
+.word-stage.done{border-color:#cbe8d5;background:#eef9f2;color:#27804d}
+.word-stage.api{margin-left:auto}
+.word-stage.api:not(.done){border-color:#f0d4b5;background:#fff5e9;color:#a96825}
+.settings-widget{padding:2px;display:grid;gap:12px}
+.settings-card{max-width:760px;border:1px solid #e1e6ef;border-radius:12px;background:#fff;padding:18px}
+.settings-card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.settings-card-head>div{display:flex;align-items:baseline;gap:8px}
+.settings-card-head span{font-size:9px;font-weight:900;color:#8a94a7;letter-spacing:.06em}
+.settings-card-head strong{font-size:15px;color:#273247}
+.settings-status{display:inline-flex;align-items:center;height:24px;padding:0 8px;border:1px solid #edd5bb;border-radius:999px;background:#fff5e9;color:#a56825;font-size:9px;font-weight:900}
+.settings-status.ok{border-color:#c9e8d5;background:#eff9f3;color:#257d49}
+.settings-card>p{margin:0 0 13px;color:#69758a;font-size:11px;line-height:1.55}
+.settings-key-row{display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.settings-key-row input{flex:1;min-width:0;height:36px;border:1px solid #dce3ed;border-radius:9px;padding:0 11px;font:inherit;font-size:11px;outline:none}
+.settings-key-row input:focus{border-color:#9db4f5;box-shadow:0 0 0 3px rgba(74,105,210,.08)}
+.settings-key-row button{height:36px;border:1px solid #cbd8fb;border-radius:9px;background:#eef3ff;color:#3457c8;font-size:10px;font-weight:900;padding:0 14px;cursor:pointer}
+.settings-key-row button:disabled,.settings-key-row input:disabled{opacity:.5;cursor:default}
+.settings-language-row{display:grid;grid-template-columns:110px minmax(220px,1fr);align-items:center;gap:12px;margin:2px 0 10px}
+.settings-language-row label{font-size:10px;font-weight:900;color:#69758a}
+.settings-language-row select{height:38px;border:1px solid #dce3ed;border-radius:9px;background:#fff;color:#273247;padding:0 10px;font:inherit;font-size:11px;font-weight:850;outline:none;cursor:pointer}
+.settings-language-row select:focus{border-color:#9db4f5;box-shadow:0 0 0 3px rgba(74,105,210,.08)}
+.widget-language-badge{display:inline-flex;align-items:center;justify-content:center;height:24px;min-width:30px;padding:0 6px;border:1px solid #d7dee8;border-radius:7px;background:#f8fafc;color:#43566b;font-size:9px;font-weight:950;letter-spacing:.03em;box-sizing:border-box}
+.settings-card>small{display:block;color:#8a94a6;font-size:9px;line-height:1.5}
+.settings-info{margin:16px 0 0;border-top:1px solid #edf0f5}
+.settings-info>div{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:9px 2px;border-bottom:1px solid #edf0f5;font-size:10px}
+.settings-info dt{color:#8a94a7;font-weight:800}.settings-info dd{margin:0;color:#3b465b;font-weight:800}
+.settings-message{margin-top:12px;border-radius:8px;background:#eef7f1;color:#2f7b4f;padding:9px 10px;font-size:10px;font-weight:700}
+.settings-message.warn{background:#fff5e9;color:#9b642b}
+@media(max-width:900px){.word-stage.api{margin-left:0}.pipeline-tools{justify-content:flex-start}.settings-card{padding:14px}.settings-key-row{align-items:stretch;flex-direction:column}.settings-key-row button{width:100%}.settings-language-row{grid-template-columns:1fr;gap:6px}}
+
+/* W01 pipeline: currently running AI stage is visually inverted. */
+.word-widget-tools .word-ai-btn.pipeline-active,
+.word-widget-tools .word-ai-btn.pipeline-active:disabled{
+  background:#111827!important;
+  border-color:#111827!important;
+  color:#fff!important;
+  opacity:1!important;
+}
+
+/* ===== W01 split: extracted words / student saved words ===== */
+.widget-panel[data-widget-panel="word"] .widget-panel-body{display:flex;flex-direction:column;overflow:hidden}
+.widget-panel[data-widget-panel="word"] .word-widget-toolbar{flex:0 0 auto}
+.word-book-split{display:grid;grid-template-rows:minmax(150px,1.15fr) minmax(110px,.85fr);gap:8px;min-height:0;flex:1}
+.word-book-pane{min-height:0;border:1px solid #e3e8ef;border-radius:10px;background:#fff;display:flex;flex-direction:column;overflow:hidden}
+.word-book-pane-head{height:31px;flex:0 0 31px;padding:0 9px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #edf0f4;background:#fafbfd}
+.word-book-pane-head strong{font-size:10px;color:#354158}.word-book-pane-head span{font-size:8px;font-weight:900;color:#8e98a8}
+.word-book-pane-body{min-height:0;overflow:auto;padding:7px}
+.word-chip-grid.compact{gap:4px}
+.word-listen-all-btn{border-color:#d9e4ff!important;background:#f5f8ff!important;color:#3458c9!important}
+.word-mp3-btn{border-color:#d7dfe9!important;background:#fff!important;color:#344054!important}
+.saved-word-chip-grid{display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start}
+.saved-word-chip{min-height:28px;display:inline-flex;align-items:center;gap:3px;padding:2px 4px 2px 3px;border:1px solid #cfd8e7;border-radius:7px;background:#fff;color:#263246;cursor:pointer}
+.saved-word-chip:hover{background:#f6f8fb;border-color:#aebcd0}.saved-word-chip strong{font-size:10px;white-space:nowrap}
+.saved-word-speaker,.saved-word-remove{width:20px;height:20px;border:0;border-radius:6px;background:transparent;display:grid;place-items:center;padding:0;cursor:pointer;font-size:10px;color:#7d8798}
+.saved-word-speaker:hover{background:#eef3fb}.saved-word-remove:hover{background:#f3f4f6;color:#3b4658}
+.saved-word-empty{height:100%;min-height:68px;border:1px dashed #dbe2eb;border-radius:8px;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;color:#8792a3;font-size:9px;line-height:1.55}
+
+/* ===== W02 grammar placeholder ===== */
+.widget-panel[data-widget-panel="grammar"] .widget-panel-body{padding:10px;background:#fbfcfe}
+.grammar-widget-note{margin-bottom:8px;color:#8a94a6;font-size:9px}
+.grammar-chip-grid{display:flex;flex-wrap:wrap;gap:5px;align-content:flex-start}
+.grammar-chip{height:29px;padding:0 10px;border:1px solid #cfd8e7;border-radius:8px;background:#fff;color:#334155;font-size:11px;font-weight:800;cursor:pointer}
+.grammar-chip:hover{background:#f3f6fb;border-color:#aebbd0}
+
+/* ===== W03 questions / W04 dialogue placeholders ===== */
+.widget-panel[data-widget-panel="questions"] .widget-panel-body,
+.widget-panel[data-widget-panel="dialogue"] .widget-panel-body{padding:10px;background:#fbfcfe}
+.questions-widget-empty,.dialogue-widget-empty{height:100%;min-height:120px;border:1px dashed #d8dfe9;border-radius:10px;background:#fff;padding:14px;display:flex;flex-direction:column;justify-content:center}
+.questions-widget-empty strong,.dialogue-widget-empty strong{font-size:13px;color:#2c374c;margin-bottom:5px}
+.questions-widget-empty p,.dialogue-widget-empty p{margin:0;color:#758095;font-size:11px;line-height:1.55}
+.questions-widget-empty small,.dialogue-widget-empty small{margin-top:9px;color:#9aa4b4;font-size:9px;line-height:1.45}
+
+/* ===== W03 question result list ===== */
+.questions-widget-list{height:100%;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:6px;padding:2px}
+.question-card{border:1px solid #dfe5ee;border-radius:9px;background:#fff;padding:8px 9px;cursor:pointer;transition:border-color .15s,background .15s}
+.question-card:hover{border-color:#aebbd0;background:#fbfcff}
+.question-card.experience{background:#fcfcfd}
+.question-card-head{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.question-card-head span{font-size:8px;font-weight:900;color:#2563eb;background:#eff6ff;border-radius:999px;padding:2px 6px}
+.question-card-head strong{font-size:9px;color:#6b7280}
+.question-card-q{font-size:11px;font-weight:800;color:#273247;line-height:1.45;word-break:keep-all}
+.question-card-a{margin-top:5px;display:flex;gap:5px;align-items:flex-start;color:#667085;font-size:10px;line-height:1.45}
+.question-card-a b{color:#475569;flex:0 0 auto}
+
+
+/* ===== KorEdu compact study UI 2026-09 ===== */
+/* All W01-W04 headers: compact sky-blue bar */
+.widget-panel-head{
+  height:36px!important;min-height:36px!important;padding:0 6px 0 8px!important;
+  background:#eaf6ff!important;border-bottom:1px solid #cfe7f7!important
+}
+.widget-panel-body{height:calc(100% - 36px)!important;padding:6px!important}
+.widget-panel-title{gap:5px!important}.widget-panel-title strong{font-size:12px!important}.widget-panel-title span{font-size:8px!important}
+.widget-panel-drag{width:20px!important;height:22px!important;font-size:13px!important}
+.widget-panel-actions{gap:3px!important}.widget-size-toggle{min-width:26px!important;height:24px!important;border-radius:7px!important;padding:0 6px!important}
+.widget-panel-close{width:24px!important;height:24px!important;border-radius:7px!important;font-size:16px!important}
+.widget-multi-grid{gap:7px!important;grid-auto-rows:minmax(160px,auto)!important}
+.widget-panel{min-height:160px!important}.widget-panel.multi{min-height:160px!important}
+
+/* W01: one content pane + narrow vertical source selectors */
+.widget-panel[data-widget-panel="word"] .widget-panel-body{padding:5px!important;background:#fbfdff!important}
+.word-widget-toolbar.pipeline.compact-toolbar{margin:0 0 4px!important;justify-content:flex-end!important;min-height:26px!important}
+.word-widget-tools.pipeline-tools{width:100%;justify-content:flex-end!important;gap:3px!important;flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:thin}
+.word-widget-tools select,.word-widget-tools button{height:25px!important;border-radius:7px!important;font-size:9px!important;padding-top:0!important;padding-bottom:0!important}
+.word-widget-tools select{padding-left:6px!important}.pipeline-tools button{padding-left:7px!important;padding-right:7px!important}
+.word-book-layout{display:grid;grid-template-columns:52px minmax(0,1fr);gap:4px;min-height:0;flex:1;overflow:hidden}
+.word-book-source-tabs{display:flex;flex-direction:column;gap:4px;min-height:0}
+.word-source-tab{height:42px;display:grid;grid-template-columns:14px minmax(0,1fr);align-items:center;gap:2px;padding:2px;border:1px solid #dbe7f0;border-radius:8px;background:#f7fbfe}
+.word-source-tab.active{background:#e8f5ff;border-color:#9ecdea}
+.word-source-tab>input{width:13px;height:13px;margin:0;accent-color:#3b82f6;cursor:pointer}
+.word-source-tab>button{height:100%;min-width:0;border:0;background:transparent;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:#566579;line-height:1.05}
+.word-source-tab.active>button{color:#155f93}.word-source-tab strong{font-size:9px}.word-source-tab span{font-size:7px;font-weight:900;margin-top:2px;opacity:.75}
+.word-book-single-pane{min-height:0;border:1px solid #dfe8ef;border-radius:8px;background:#fff;overflow:hidden;display:flex}
+.word-book-single-pane .word-book-pane-body{flex:1;padding:4px!important;overflow:auto!important}
+.word-chip-grid.compact,.saved-word-chip-grid{gap:3px!important}
+.word-chip{min-height:26px!important;padding:2px 5px 2px 2px!important;border-radius:6px!important;grid-template-columns:18px minmax(0,max-content)!important;gap:2px!important}
+.word-chip-speaker,.saved-word-speaker,.saved-word-remove{width:18px!important;height:18px!important;font-size:9px!important}
+.word-chip-text strong{font-size:10px!important}.word-chip-text span{font-size:7px!important}
+.saved-word-chip{min-height:25px!important;padding:2px 3px 2px 2px!important;border-radius:6px!important}.saved-word-chip strong{font-size:10px!important}
+.saved-word-empty,.word-widget-empty.compact{min-height:48px!important;padding:6px!important;font-size:8px!important}
+.word-widget-loading{min-height:58px!important}.word-widget-loading>span{margin-bottom:5px!important}
+
+/* W02/W04: remove dead vertical space where possible */
+.widget-panel[data-widget-panel="grammar"] .widget-panel-body,
+.widget-panel[data-widget-panel="dialogue"] .widget-panel-body{padding:6px!important}
+.grammar-widget-note{margin-bottom:4px!important;font-size:8px!important}.grammar-chip-grid{gap:3px!important}.grammar-chip{height:25px!important;padding:0 8px!important;font-size:10px!important}
+.dialogue-widget-empty,.questions-widget-empty{min-height:60px!important;padding:8px!important}
+
+/* W03: compact 3-column question / answer / student answer */
+.widget-panel[data-widget-panel="questions"] .widget-panel-body{padding:5px!important;background:#fbfdff!important;overflow:hidden!important}
+.questions-widget-shell{height:100%;min-height:0;display:grid;grid-template-rows:25px 24px minmax(0,1fr);gap:3px}
+.questions-compact-toolbar{display:flex;align-items:center;justify-content:flex-end;gap:6px;min-height:0}
+.questions-compact-toolbar span{font-size:8px;font-weight:900;color:#8290a3}
+.questions-compact-toolbar button{height:23px;border:1px solid #cfe0ef;border-radius:7px;background:#fff;color:#3e5871;font-size:9px;font-weight:800;padding:0 7px;cursor:pointer}
+.questions-grid-head{display:grid;grid-template-columns:minmax(260px,1.5fr) minmax(180px,1fr) minmax(180px,1fr);gap:3px;align-items:center;padding:0 4px;border:1px solid #cfe7f7;border-radius:7px;background:#eaf6ff;color:#355269;font-size:9px}
+.questions-grid-head strong{padding-left:3px}
+.questions-widget-list{height:100%!important;min-height:0!important;overflow:auto!important;display:flex!important;flex-direction:column!important;gap:3px!important;padding:0!important}
+.question-row{display:grid;grid-template-columns:minmax(260px,1.5fr) minmax(180px,1fr) minmax(180px,1fr);gap:3px;border:1px solid #dfe7ee;border-radius:7px;background:#fff;padding:3px;min-height:31px}
+.question-row.experience{background:#fcfdff}
+.question-cell{min-width:0;display:flex;align-items:center;gap:3px;padding:1px 3px;border-right:1px solid #eef2f5;font-size:9px;color:#556276;white-space:nowrap;overflow:hidden}
+.question-cell:last-child{border-right:0}.question-q-cell{cursor:pointer;color:#26384a}.question-q-cell:hover{background:#f5fbff;border-radius:5px}
+.question-q-cell strong,.question-a-cell span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.question-q-cell strong{font-size:10px;font-weight:800}.question-a-cell span{font-size:9px}
+.question-time{flex:0 0 auto;font-size:7px;font-weight:900;color:#2470ad;background:#e9f5ff;border-radius:999px;padding:1px 4px}
+.question-speaker{flex:0 0 18px;width:18px;height:18px;border:0;border-radius:5px;background:transparent;padding:0;display:grid;place-items:center;font-size:9px;cursor:pointer;color:#64748b}
+.question-speaker:hover{background:#eaf3fa}.question-speaker:disabled{opacity:.28;cursor:default}
+.question-student-cell input{min-width:0;width:100%;height:22px;border:1px solid #dce5ed;border-radius:5px;padding:0 5px;font-size:9px;color:#334155;outline:none;background:#fff}
+.question-student-cell input:focus{border-color:#91bfe0;box-shadow:0 0 0 2px rgba(93,166,216,.08)}
+
+@media(max-width:900px){
+  .word-widget-tools.pipeline-tools{justify-content:flex-start!important}
+  .questions-grid-head,.question-row{grid-template-columns:minmax(220px,1.4fr) minmax(160px,1fr) minmax(160px,1fr)}
+}
+
+/* ===== 2026-09-03 W03 질문/답변 다국어 매칭 표시 ===== */
+.questions-compact-toolbar select{height:23px;border:1px solid #cfe0ef;border-radius:7px;background:#fff;color:#3e5871;font-size:9px;font-weight:800;padding:0 5px;outline:none}
+.question-row{min-height:48px}
+.question-cell{align-items:flex-start;white-space:normal;overflow:visible;padding-top:3px;padding-bottom:3px}
+.question-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px;overflow:hidden}
+.question-main-line{min-width:0;display:flex;align-items:center;gap:3px;white-space:nowrap;overflow:hidden}
+.question-main-line strong,.question-main-line span[title]{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.question-ordered{font-size:8px;line-height:1.25;color:#52677c;white-space:normal;overflow-wrap:anywhere}
+.question-natural{font-size:8px;line-height:1.25;color:#7b8795;white-space:normal;overflow-wrap:anywhere}
+.question-student-cell{align-items:center}
+
+/* ===== 2026-09-03 W01/W03 readability + question sorting/column toggles ===== */
+/* W01: 단어 텍스트 가독성 확대 */
+.word-source-tab strong{font-size:11px!important}
+.word-source-tab span{font-size:9px!important}
+.word-chip{min-height:31px!important;padding:3px 7px 3px 3px!important;grid-template-columns:21px minmax(0,max-content)!important;gap:3px!important}
+.word-chip-speaker,.saved-word-speaker,.saved-word-remove{width:21px!important;height:21px!important;font-size:11px!important}
+.word-chip-text strong{font-size:13px!important;line-height:1.2!important}
+.word-chip-text span{font-size:9px!important;line-height:1.2!important}
+.saved-word-chip{min-height:30px!important;padding:3px 5px 3px 3px!important}
+.saved-word-chip strong{font-size:13px!important;line-height:1.2!important}
+.word-widget-tools select,.word-widget-tools button{font-size:10px!important}
+
+/* W03: 헤더/정렬/ON-OFF */
+.questions-widget-shell{grid-template-rows:29px 31px minmax(0,1fr)!important;gap:4px!important}
+.questions-compact-toolbar{gap:7px!important}
+.questions-compact-toolbar span{font-size:10px!important}
+.questions-compact-toolbar select,.questions-compact-toolbar button{height:27px!important;font-size:10px!important}
+.question-hidden-toggles{display:flex;align-items:center;gap:4px;margin-right:auto}
+.questions-grid-head{font-size:11px!important;padding:2px 5px!important;gap:4px!important;min-width:0}
+.question-head-cell{min-width:0;display:flex;align-items:center;justify-content:space-between;gap:5px;padding:0 3px}
+.question-sort-btn{min-width:0;border:0;background:transparent;color:inherit;font-size:11px;font-weight:900;padding:2px 3px;display:inline-flex;align-items:center;gap:4px;cursor:pointer;white-space:nowrap}
+.question-sort-btn span{font-size:11px;font-weight:1000;line-height:1}
+.question-sort-btn.active{background:rgba(255,255,255,.65);border-radius:5px}
+.question-column-toggle{flex:0 0 auto;height:20px!important;border-radius:999px!important;padding:0 6px!important;font-size:8px!important;font-weight:900!important;cursor:pointer}
+.question-column-toggle.on{border:1px solid #9cc8e8!important;background:#fff!important;color:#28658e!important}
+.question-column-toggle.off{border:1px solid #d1d9e2!important;background:#f4f6f8!important;color:#7b8795!important}
+
+/* W03: 열 표시 상태별 폭 */
+.questions-grid-head.cols-qas,.question-row.cols-qas{grid-template-columns:minmax(260px,1.5fr) minmax(180px,1fr) minmax(180px,1fr)!important}
+.questions-grid-head.cols-qa,.question-row.cols-qa,
+.questions-grid-head.cols-qs,.question-row.cols-qs{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+.questions-grid-head.cols-q,.question-row.cols-q{grid-template-columns:minmax(0,1fr)!important}
+
+/* W03: 질문/답변/학생답변 본문 글씨 확대 */
+.question-row{min-height:60px!important;gap:4px!important;padding:4px!important}
+.question-cell{font-size:12px!important;gap:5px!important;padding:4px 6px!important}
+.question-q-cell strong{font-size:13px!important;line-height:1.35!important}
+.question-a-cell .question-main-line span[title]{font-size:12px!important;line-height:1.35!important}
+.question-time{font-size:9px!important;padding:2px 5px!important}
+.question-speaker{flex-basis:22px!important;width:22px!important;height:22px!important;font-size:11px!important}
+.question-copy{gap:3px!important}
+.question-main-line{gap:5px!important}
+.question-ordered{font-size:10.5px!important;line-height:1.35!important}
+.question-natural{font-size:10.5px!important;line-height:1.35!important}
+.question-student-cell input{height:29px!important;font-size:12px!important;padding:0 7px!important}
+
+@media(max-width:900px){
+  .questions-grid-head.cols-qas,.question-row.cols-qas{grid-template-columns:minmax(220px,1.35fr) minmax(170px,1fr) minmax(170px,1fr)!important}
+  .questions-grid-head.cols-qa,.question-row.cols-qa,
+  .questions-grid-head.cols-qs,.question-row.cols-qs{grid-template-columns:minmax(180px,1fr) minmax(180px,1fr)!important}
+}
+
+
+/* 위젯 레일: 단어·문법·QA(영상/강의 연동) | 판서·복습·쓰기(회차 연동) | 대화·한글1·한글2(자유) | 영상·교재 | 커리큘럼 | (여백) | 설정 */
+.widget-rail{gap:0!important;padding-top:12px!important;padding-bottom:10px!important}
+.widget-rail-group{gap:8px}
+.widget-rail-spacer{flex:1 1 auto;width:100%;min-height:10px}
+.widget-rail-group-label{display:none!important}
+.widget-rail-divider{display:block;width:38px;height:2px;border-radius:2px;background:var(--accent);opacity:.55;margin:5px 0;flex:0 0 auto}
+.widget-rail-divider-strong{margin:16px 0 14px!important;background:var(--accent)!important;opacity:1!important;height:3px!important}
+.widget-empty-blank{min-height:150px;height:100%;background:#fff}
+
+/* ===== PATCH 2026-09-03: consolidated widget headers / readability / rail labels ===== */
+
+/* 위젯별 도구는 본문 한 줄을 차지하지 않고 공통 상단 헤더 안에 둔다. */
+.widget-panel-head{
+  display:flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  overflow:hidden!important;
+}
+.widget-panel-title{
+  flex:0 0 auto!important;
+  min-width:0!important;
+}
+.widget-panel-context-tools{
+  flex:1 1 auto;
+  min-width:0;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:thin;
+}
+.widget-head-tools{
+  min-width:max-content;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:4px;
+  white-space:nowrap;
+}
+.widget-head-tools button,
+.widget-head-tools select{
+  height:24px;
+  min-height:24px;
+  border:1px solid #cfe0ef;
+  border-radius:7px;
+  background:#fff;
+  color:#3e5871;
+  font-size:9px;
+  font-weight:850;
+  padding:0 6px;
+  cursor:pointer;
+  outline:none;
+}
+.widget-head-tools button:disabled,
+.widget-head-tools select:disabled{opacity:.45;cursor:default}
+.widget-head-tools .widget-head-count{
+  font-size:9px;
+  font-weight:900;
+  color:#6f8295;
+  padding:0 2px;
+}
+.widget-head-tools .question-column-toggle{height:22px!important;font-size:8px!important;padding:0 6px!important}
+.widget-head-tools .question-sort-reset{border-color:#d7dee8;background:#f8fafc;color:#5f6f80}
+.widget-panel-actions{flex:0 0 auto!important}
+
+/* W10 쓰기: 학습지 컨트롤(입력·저장/불러오기·글씨체·칸크기·인쇄)을 위젯 헤더에 — iframe 안 컨트롤 줄 없앰.
+   잘 안 보인다는 요청으로 이 위젯만 다른 위젯 헤더보다 버튼/글자를 크게 잡는다. */
+.wr-head-tools{flex:1 1 auto;min-width:0}
+.wr-head-tools,
+.wr-head-tools button,
+.wr-head-tools select{height:32px!important;min-height:32px!important;font-size:13px!important;font-weight:800!important}
+.wr-head-tools button,
+.wr-head-tools select{padding:0 9px!important;border-radius:8px!important}
+.wr-head-tools .wr-text{width:auto;min-width:90px;flex:1 1 auto;border:1px solid #cfe0ef;border-radius:8px;
+  background:#fff;color:#3e5871;font-weight:700;padding:0 10px;outline:none}
+.wr-head-tools select{flex:0 0 auto}
+.wr-head-tools [data-wr-save]{flex:0 0 auto;border-color:#cfe0ef;background:#eef6ff;color:#2159c9}
+.wr-head-tools [data-wr-delete-saved]{flex:0 0 auto;width:32px;padding:0!important;border-color:#f1c4c4;background:#fdeaea;color:#c0392b}
+.wr-head-tools [data-wr-stroke]{flex:0 0 auto;color:#8a93a3}
+.wr-head-tools [data-wr-stroke].is-on{border-color:#91b8df;background:#eef6ff;color:#2159c9}
+.wr-head-tools [data-wr-print]{flex:0 0 auto;border-color:#f0b9ac;background:#fdf1ee;color:#c0432b}
+
+/* W01 도구도 헤더에 들어갔으므로 본문은 단어 콘텐츠에 전부 사용한다. */
+.widget-panel[data-widget-panel="word"] .widget-panel-body{padding-top:5px!important}
+.word-head-tools .word-ai-btn{border-color:#d8dff5;background:#f6f8ff;color:#425bc1}
+.word-head-tools .word-excel-btn{border-color:#b9dfc4;background:#f1fbf4;color:#2d7b45}
+.word-head-tools .word-ai-btn.pipeline-active,
+.word-head-tools .word-ai-btn.pipeline-active:disabled{background:#111827!important;border-color:#111827!important;color:#fff!important;opacity:1!important}
+
+/* W03 도구를 헤더로 이동: 본문은 정렬 헤더 + 목록 2단만 사용 */
+.questions-widget-shell{
+  grid-template-rows:31px minmax(0,1fr)!important;
+  gap:4px!important;
+}
+
+/* 질문/답변이 한 줄 ellipsis로 잘리지 않도록 실제 내용 높이만큼 확장한다. */
+.question-row{
+  height:auto!important;
+  min-height:64px!important;
+  align-items:stretch!important;
+}
+.question-cell{
+  align-items:flex-start!important;
+  overflow:visible!important;
+  white-space:normal!important;
+  line-height:1.4!important;
+}
+.question-copy{
+  overflow:visible!important;
+  gap:4px!important;
+}
+.question-main-line{
+  align-items:flex-start!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  flex-wrap:wrap!important;
+  line-height:1.4!important;
+}
+.question-main-line strong,
+.question-main-line span[title],
+.question-q-cell strong,
+.question-a-cell span{
+  white-space:normal!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  overflow-wrap:anywhere!important;
+  word-break:keep-all!important;
+}
+.question-q-cell strong{font-size:14px!important;line-height:1.4!important}
+.question-a-cell .question-main-line span[title]{font-size:13px!important;line-height:1.4!important}
+.question-ordered,.question-natural{font-size:11.5px!important;line-height:1.42!important;overflow:visible!important}
+.question-time{font-size:9.5px!important}
+.question-student-cell input{font-size:13px!important;height:31px!important}
+
+/* 단어장 가독성 추가 확대 */
+.word-chip-text strong,.saved-word-chip strong{font-size:15px!important;line-height:1.25!important}
+.word-chip-text span{font-size:10.5px!important;line-height:1.25!important}
+.word-source-tab strong{font-size:12px!important}
+.word-source-tab span{font-size:9.5px!important}
+
+/* 오른쪽 레일: 아이콘 대신 확정된 텍스트 레이블. 설정은 기존 톱니바퀴 유지. */
+.widget-toggle{
+  font-size:10px!important;
+  font-weight:900!important;
+  line-height:1.05!important;
+  letter-spacing:-.04em;
+  padding:0 2px!important;
+}
+.widget-toggle svg{width:19px!important;height:19px!important}
+
+@media(max-width:900px){
+  .widget-head-tools button,.widget-head-tools select{font-size:8px;padding:0 5px}
+  .question-q-cell strong{font-size:13px!important}
+  .question-a-cell .question-main-line span[title]{font-size:12px!important}
+  .question-ordered,.question-natural{font-size:10.5px!important}
+}
+
+/* PATCH 2026-09-03: W03 Q&A auto-height + translation ON/OFF */
+/* Q&A 패널은 사용자 저장 높이를 적용하지 않고 질문 내용만큼 아래로 확장한다. */
+.widget-panel.multi[data-widget-panel="questions"]{
+  height:auto!important;
+  max-height:none!important;
+  min-height:0!important;
+  resize:none!important;
+  overflow:visible!important;
+  align-self:start!important;
+}
+.widget-panel[data-widget-panel="questions"] .widget-panel-body{
+  height:auto!important;
+  min-height:0!important;
+  overflow:visible!important;
+}
+.widget-panel[data-widget-panel="questions"] .questions-widget-shell{
+  height:auto!important;
+  min-height:0!important;
+  display:grid!important;
+  grid-template-rows:31px auto!important;
+}
+.widget-panel[data-widget-panel="questions"] .questions-widget-list{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+/* 질문 행도 콘텐츠 높이에 맞춘다. */
+.widget-panel[data-widget-panel="questions"] .question-row{
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+/* 번역 OFF 시 언어 선택은 비활성 상태를 명확히 표시한다. */
+.question-head-tools select:disabled{
+  opacity:.48!important;
+  cursor:default!important;
+  background:#f4f6f8!important;
+}
+
+/* ===== PATCH: non-overlapping interactive split panes ===== */
+.widget-multi-grid{
+  position:relative!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:0!important;
+  height:100%!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  padding-right:0!important;
+  align-content:stretch!important;
+}
+.widget-split-row{
+  display:flex;
+  flex:1 1 0;
+  min-height:118px;
+  min-width:0;
+  overflow:hidden;
+}
+.widget-split-pane{
+  min-width:0;
+  min-height:0;
+  overflow:hidden;
+  display:flex;
+}
+.widget-split-pane>.widget-panel.multi{
+  width:100%!important;
+  height:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  max-height:none!important;
+  resize:none!important;
+  align-self:stretch!important;
+  overflow:hidden!important;
+  border-radius:8px!important;
+}
+.widget-pane-splitter{
+  position:relative;
+  flex:0 0 auto;
+  z-index:6;
+  background:#eef3f8;
+  touch-action:none;
+  user-select:none;
+}
+.widget-pane-splitter.vertical{width:7px;cursor:col-resize}
+.widget-pane-splitter.horizontal{height:7px;cursor:row-resize}
+.widget-pane-splitter::after{content:"";position:absolute;background:#cbd8e4;opacity:.85;border-radius:999px}
+.widget-pane-splitter.vertical::after{top:8px;bottom:8px;left:3px;width:1px}
+.widget-pane-splitter.horizontal::after{left:8px;right:8px;top:3px;height:1px}
+.widget-pane-splitter:hover{background:#dfeaf5}
+.widget-pane-splitter:hover::after,body.widget-pane-resizing .widget-pane-splitter::after{background:#6f9fcb;opacity:1}
+body.widget-pane-resizing{user-select:none!important}
+body.widget-pane-resizing iframe{pointer-events:none!important}
+body.widget-pane-resizing-col{cursor:col-resize!important}
+body.widget-pane-resizing-row{cursor:row-resize!important}
+
+/* 위젯 하나만 열려 있을 때 아래쪽 세로 크기 조절 핸들 (기본은 꽉 채움, 드래그하면 직접 줄일 수 있음) */
+.widget-solo-resize{
+  flex:0 0 auto;height:9px;position:relative;cursor:row-resize;touch-action:none;user-select:none;
+  display:flex;align-items:center;justify-content:center;background:transparent;
+}
+.widget-solo-resize i{
+  display:block;width:32px;height:4px;border-radius:999px;background:#d5dde8;transition:background .15s;
+}
+.widget-solo-resize:hover i,body.widget-pane-resizing .widget-solo-resize i{background:#6f9fcb}
+.widget-solo-resize.is-custom i{background:#9db2f3}
+
+/* 패널 본문은 각 split-pane 안에서만 스크롤한다. 다른 위젯 영역을 침범하지 않는다. */
+.widget-split-pane .widget-panel-body{
+  min-height:0!important;
+  overflow:auto!important;
+}
+
+/* W03: 질문창은 자기 split 영역까지만 사용하고 초과 질문만 내부 스크롤 */
+.widget-panel.multi[data-widget-panel="questions"]{
+  height:100%!important;
+  min-height:0!important;
+  max-height:none!important;
+  resize:none!important;
+  overflow:hidden!important;
+  align-self:stretch!important;
+}
+.widget-panel[data-widget-panel="questions"] .widget-panel-body{
+  height:calc(100% - 36px)!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+.widget-panel[data-widget-panel="questions"] .questions-widget-shell{
+  height:100%!important;
+  min-height:0!important;
+  display:grid!important;
+  grid-template-rows:31px minmax(0,1fr)!important;
+}
+.widget-panel[data-widget-panel="questions"] .questions-widget-list{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+}
+
+/* W03: timestamp를 질문의 맨 왼쪽에, 스피커를 바로 아래에 배치 */
+.question-q-cell{
+  display:grid!important;
+  grid-template-columns:38px minmax(0,1fr)!important;
+  align-items:start!important;
+  column-gap:4px!important;
+}
+.question-q-meta{
+  width:38px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:flex-start;
+  gap:3px;
+  flex:0 0 38px;
+}
+.question-q-meta .question-time{
+  margin:0!important;
+  align-self:flex-start!important;
+  white-space:nowrap!important;
+}
+.question-q-meta .question-speaker{
+  margin:0!important;
+  align-self:flex-start!important;
+}
+.question-q-cell>.question-copy{
+  min-width:0!important;
+  width:100%!important;
+}
+
+@media(max-width:760px){
+  .widget-split-row{flex-direction:column;min-height:236px}
+  .widget-pane-splitter.vertical{width:auto;height:7px;cursor:row-resize}
+  .widget-pane-splitter.vertical::after{left:8px;right:8px;top:3px;height:1px;width:auto;bottom:auto}
+}
+
+/* ===== PATCH: Q/A MATCH + unclipped variable row height ===== */
+/* 각 질문 행은 고정 세로칸을 갖지 않는다. 표시 내용만큼 자연스럽게 늘어난다. */
+.widget-panel[data-widget-panel="questions"] .question-row{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+  align-items:stretch!important;
+}
+.widget-panel[data-widget-panel="questions"] .question-cell{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+  align-items:flex-start!important;
+}
+.widget-panel[data-widget-panel="questions"] .question-copy,
+.widget-panel[data-widget-panel="questions"] .question-main-line,
+.widget-panel[data-widget-panel="questions"] .question-ordered,
+.widget-panel[data-widget-panel="questions"] .question-natural{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+  white-space:normal!important;
+}
+.widget-panel[data-widget-panel="questions"] .question-copy{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:4px!important;
+}
+.widget-panel[data-widget-panel="questions"] .question-main-line{
+  display:block!important;
+  line-height:1.45!important;
+}
+.widget-panel[data-widget-panel="questions"] .question-ordered,
+.widget-panel[data-widget-panel="questions"] .question-natural{
+  display:block!important;
+  overflow-wrap:anywhere!important;
+  word-break:normal!important;
+  line-height:1.45!important;
+}
+
+/* 위젯 자체는 split-pane 범위를 넘지 않는다. 질문이 많으면 목록만 스크롤. */
+.widget-panel[data-widget-panel="questions"] .questions-widget-shell{
+  min-height:0!important;
+  overflow:hidden!important;
+}
+.widget-panel[data-widget-panel="questions"] .questions-widget-list{
+  min-height:0!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  align-items:stretch!important;
+}
+
+/* 한국어/외국어 1:1 MATCH 토큰. 어느 쪽 hover든 동일 group을 반전한다. */
+.question-match-token{
+  display:inline;
+  border-radius:4px;
+  padding:1px 1px;
+  transition:background-color .08s ease,color .08s ease;
+}
+.question-match-token.hit{
+  background:#fde68a;
+  color:#111827;
+}
+.question-match-sep{
+  color:#df3341;
+  font-weight:900;
+  padding:0 2px;
+}
+
+/* ===== PATCH FIX: Q&A rows must never flex-shrink ===== */
+/* 질문 목록은 세로 flex이므로 각 행을 압축하지 않는다.
+   행은 자기 콘텐츠 높이를 유지하고, 초과분은 목록 자체가 스크롤한다. */
+.widget-panel[data-widget-panel="questions"] .questions-widget-list{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  min-height:0!important;
+}
+.widget-panel[data-widget-panel="questions"] .question-row{
+  flex:0 0 auto!important;
+  flex-shrink:0!important;
+  height:auto!important;
+  min-height:64px!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+.widget-panel[data-widget-panel="questions"] .question-cell{
+  flex-shrink:0!important;
+  min-height:0!important;
+  height:auto!important;
+}
+
+/* ── W04 숙제(첨삭) 위젯 ── */
+.widget-panel[data-widget-panel="homework"] .widget-panel-body{padding:0}
+.hw-root{display:flex;flex-direction:column;height:100%;font-size:13px;position:relative}
+.hw-drop{margin:12px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  border:2px dashed #cfd6e1;border-radius:12px;color:#8a93a3;text-align:center;cursor:pointer;padding:24px}
+.hw-drop strong{color:#2a3446;font-size:13px}
+.hw-drop span{font-size:11px}
+.hw-root.hw-over .hw-drop{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.hw-root.hw-over{outline:2px dashed var(--accent);outline-offset:-4px}
+/* 도구는 위젯 헤더로 이동 (기존 .widget-head-tools 규칙 위에 얹음) */
+.hw-head-tools .hw-btn{font-size:14px!important;font-weight:700;padding:0 8px!important;height:24px;
+  border:1px solid #d7dde6;background:#fff;color:#3a4453}
+.hw-head-tools .hw-btn:hover:not(:disabled){filter:brightness(.95)}
+.hw-head-tools .hw-btn:disabled{opacity:.4}
+.hw-head-tools .hw-b-clear{background:#fdeaea;border-color:#f1c4c4;color:#c0392b}
+.hw-head-tools .hw-b-wongo{background:#fff6e6;border-color:#f0dcae;color:#a5730f;font-size:12px!important;font-weight:800}
+.hw-head-tools .hw-b-print{background:#e9f7ec;border-color:#c3e6cc;color:#1e7e34}
+.hw-head-tools .hw-b-save{background:#e7f0ff;border-color:#c2d7fb;color:#2159c9}
+.hw-head-tools label.hw-btn{display:inline-flex;align-items:center;font-size:12px!important}
+.hw-head-tools .hw-name{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:800;color:#6f8295;flex:0 0 auto}
+.hw-head-tools .hw-name input{width:56px;height:22px;border:1px solid #cfe0ef;border-radius:6px;padding:0 5px;font-size:11px;font-weight:600;color:#253047}
+.hw-head-tools .hw-student select{height:22px;border:1px solid #cfe0ef;border-radius:6px;font-size:11px;font-weight:700;color:#1d4ed8;max-width:90px}
+.hw-head-tools .hw-range{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:800;color:#6f8295;flex:0 0 auto}
+.hw-head-tools .hw-range input[type=range]{width:64px}
+.hw-head-tools .hw-swatches{display:flex;gap:3px;flex:0 0 auto}
+.hw-head-tools .hw-swatch{width:16px;height:16px;border-radius:4px;border:2px solid transparent;cursor:pointer;padding:0}
+.hw-head-tools .hw-swatch.on{border-color:#111}
+/* 기본(zoom 1): 이미지가 창 높이를 꽉 채움 · 한 페이지 한눈에 · 스크롤 없음 */
+.hw-scroll{flex:1;min-height:0;overflow:hidden;padding:0;background:#eef1f4;display:flex;align-items:flex-start;justify-content:center}
+.hw-stage{position:relative;flex:0 0 auto;height:100%;font-size:0;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.1);overflow:visible}
+.hw-stage>img{display:block;height:100%;width:auto;cursor:crosshair;user-select:none}
+/* ⤢ 로 확대: 그때만 스크롤 */
+.hw-scroll.hw-zoomed{overflow:auto;justify-content:flex-start}
+.hw-resize{position:absolute;right:3px;bottom:3px;z-index:6;width:24px;height:24px;border-radius:6px;
+  background:rgba(49,87,213,.92);color:#fff;display:grid;place-items:center;font-size:14px;cursor:nwse-resize;
+  opacity:.4;transition:opacity .12s;box-shadow:0 1px 5px rgba(0,0,0,.3);user-select:none;touch-action:none}
+.hw-stage:hover .hw-resize,.hw-resize:active{opacity:1}
+.hw-layer{position:absolute;inset:0;pointer-events:none}
+.hw-cmt{position:absolute;transform:translate(-1px,-1px);pointer-events:auto}
+/* 툴바까지 마우스가 이동해도 hover 가 끊기지 않도록 넉넉한 히트 영역 */
+.hw-cmt::before{content:"";position:absolute;left:-14px;right:-14px;top:-42px;bottom:-10px;z-index:0}
+.hw-cmt-text{position:relative;z-index:1;display:inline-block;min-width:16px;white-space:pre-wrap;word-break:break-word;
+  font-size:15px;/* JS가 이미지 폭에 맞춰 재계산; 계산 전에도 보이도록 기본값 */
+  font-weight:700;line-height:1.2;padding:0 2px;border:1px solid transparent;border-radius:3px;outline:none;cursor:text;
+  background:transparent;text-shadow:0 0 2px #fff,0 0 2px #fff,0 0 3px #fff,0 0 4px #fff}
+.hw-cmt-text:empty{background:rgba(255,255,255,.7);border-color:#c7ccd4}
+.hw-cmt-text:empty::after{content:"첨삭 입력";font-weight:400;font-size:11px;color:#98a1af}
+.hw-cmt-text:hover{background:rgba(255,255,255,.55)}
+.hw-cmt-text:focus{border-color:var(--accent);background:rgba(255,255,255,.95);box-shadow:0 0 0 2px rgba(49,87,213,.25)}
+.hw-cmt-tools{position:absolute;top:-36px;left:-6px;display:flex;gap:5px;z-index:7;
+  opacity:0;pointer-events:none;transition:opacity .1s ease .45s}
+.hw-cmt:hover .hw-cmt-tools,.hw-cmt:focus-within .hw-cmt-tools{opacity:1;pointer-events:auto;transition-delay:0s}
+.hw-cmt-tools button{border:0;background:rgba(255,255,255,.5);color:#39424f;font-size:20px;line-height:1;
+  width:32px;height:32px;display:grid;place-items:center;border-radius:8px;cursor:pointer;
+  text-shadow:0 0 3px #fff,0 0 4px #fff}
+.hw-cmt-tools button:hover{background:rgba(255,255,255,.98);color:var(--accent)}
+.hw-cmt-tools .hw-grip{cursor:move}
+.hw-cmt-tools .hw-boldbtn{font-weight:900;font-size:17px}
+.hw-cmt-tools .hw-boldbtn.on{background:#2f6feb;color:#fff}
+.hw-hint{font-size:11px;color:#9aa3b1;padding:6px 10px;border-top:1px solid var(--line);background:#fafbfd}
+
+
+/* ── LOCAL 시뮬레이션 스위처 (admin 전용) — 상단 계정영역에 콤보박스만 ── */
+#simBarSlot:empty{display:none}
+.sim-select{font:inherit;font-size:12px;max-width:170px;height:36px;border:1px solid #d5dbe4;border-radius:9px;
+  padding:0 8px;background:#fff;color:#334155;cursor:pointer}
+
+/* ── 번역 / 번역언어 / 읽기속도 — 상단 계정영역의 전역 설정 (강의마다 따로가 아니라 전체 공통) ── */
+.reading-prefs-bar{display:inline-flex;align-items:center;gap:5px}
+.reading-xlate-toggle{font:inherit;font-size:11px;font-weight:800;height:30px;padding:0 10px;border:1px solid #d5dbe4;
+  border-radius:8px;background:#fff;color:#5a6473;cursor:pointer}
+.reading-xlate-toggle.on{background:#2f54ca;border-color:#2f54ca;color:#fff}
+.reading-lang-select,.reading-speed-select{font:inherit;font-size:11px;height:30px;border:1px solid #d5dbe4;
+  border-radius:8px;padding:0 6px;background:#fff;color:#334155;cursor:pointer}
+.reading-lang-select{max-width:96px}
+.reading-speed-select{max-width:66px}
+@media(max-width:1120px){.reading-prefs-bar{display:none}}
+
+/* 회원관리: 회원ID + 담당 선생님 열 추가 (6열) */
+.admin-user-row{grid-template-columns:66px minmax(160px,1.7fr) 96px 62px 84px minmax(120px,1.1fr) 78px}
+.admin-user-row [data-roster-teacher]{width:100%}
+@media(max-width:900px){.admin-user-row{grid-template-columns:60px minmax(150px,1.6fr) 88px 80px minmax(110px,1fr) 70px}.admin-user-row>*:nth-child(4){display:none}}
+
+/* ── W05 커리큘럼 위젯 ── */
+.widget-panel[data-widget-panel="curriculum"] .widget-panel-body{padding:0}
+.cur-head select{max-width:150px;font:inherit;font-size:12px}
+.cur-who{font-size:12px;font-weight:800;color:#3a4453}
+.cur-root{display:flex;flex-direction:column;height:100%;font-size:13px;overflow:auto;background:#f5f7f9}
+.cur-msg{padding:24px;text-align:center;color:#8a93a3}
+.cur-msg.err{color:#c0392b}
+.cur-sec{padding:8px 10px;border-bottom:1px solid var(--line);background:#fff}
+.cur-sec-h{margin:0 0 6px;font-size:11px;font-weight:900;letter-spacing:.03em;color:#6b7686}
+.cur-count{display:inline-block;min-width:16px;text-align:center;background:#eef1f5;border-radius:999px;font-size:10px;color:#8a93a3;padding:0 5px}
+.cur-chips{display:flex;flex-wrap:wrap;gap:6px}
+.cur-none{font-size:11px;color:#a7b0bd}
+.cur-chip{display:flex;flex-direction:column;gap:3px;min-width:120px;max-width:200px;padding:6px 8px;border:1px solid #dbe1e9;
+  border-left:3px solid #9aa6b6;border-radius:8px;background:#fff;position:relative}
+.cur-chip.cur-t-youtube{border-left-color:#e0483b}
+.cur-chip.cur-t-lecture{border-left-color:#2f6feb}
+.cur-chip.cur-t-word{border-left-color:#1e7e34}
+.cur-chip.cur-t-review{border-left-color:#d98200}
+.cur-chip-title{font-size:12px;font-weight:600;color:#2a3446;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cur-bar{height:5px;border-radius:999px;background:#e9edf2;overflow:hidden}
+.cur-bar>i{display:block;height:100%;background:#2f6feb;border-radius:999px}
+.cur-chip-del{position:absolute;top:2px;right:3px;border:0;background:transparent;color:#b7bfca;font-size:13px;cursor:pointer;line-height:1}
+.cur-chip:hover .cur-chip-del{color:#e0483b}
+.cur-chip-prog{align-self:flex-start;margin-top:2px;border:1px solid #cfd7e2;background:#f6f8fb;color:#51607a;
+  border-radius:6px;padding:2px 7px;font:inherit;font-size:10px;font-weight:800;cursor:pointer}
+.cur-chip-prog:hover{border-color:var(--accent);color:var(--accent)}
+.cur-done-at{font-weight:700;color:#8a93a3;font-size:10px}
+.cur-pace{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:6px 10px;margin:0 10px 6px;
+  background:#f2f6ff;border:1px solid #d8e3fb;border-radius:8px;font-size:11px;color:#425268}
+.cur-pace b{color:#1d4ed8}
+.cur-pace input{width:38px;margin:0 3px;padding:1px 3px;border:1px solid #c4cdd8;border-radius:5px;font:inherit;font-size:11px}
+.cur-autofill{margin-top:6px;border:1px dashed #b9c6d6;background:#fff;color:#5a6473;border-radius:7px;
+  padding:3px 9px;font:inherit;font-size:10px;font-weight:800;cursor:pointer}
+.cur-autofill:hover{border-color:var(--accent);color:var(--accent)}
+.cur-regen{margin-left:auto;border:1px solid #d8c39a;background:#fffaf0;color:#8a6d3b;border-radius:6px;
+  padding:2px 8px;font:inherit;font-size:10px;font-weight:800;cursor:pointer}
+.cur-regen:hover{border-color:#d98200;color:#d98200}
+.cur-pace-tip{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 10px 6px;padding:6px 10px;
+  background:#fff8e6;border:1px solid #f0dca6;border-radius:8px;font-size:11px;color:#7a5c14;line-height:1.4}
+.cur-pace-tip button{border:1px solid #e0b34d;background:#fff;color:#8a6d1f;border-radius:6px;
+  padding:2px 8px;font:inherit;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap}
+.cur-pace-tip button:hover{background:#fdf0d0}
+.cur-sessions-wrap{padding:8px 10px;flex:1}
+.cur-sessions{display:flex;flex-direction:column;gap:8px}
+.cur-session{border:1px solid #dbe1e9;border-radius:10px;background:#fff;padding:8px 10px;border-left:4px solid #f0b73c}
+.cur-session.done{border-left-color:#28a745;background:#f6fbf7}
+.cur-session-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12px;color:#3a4453}
+.cur-session-head .cur-date{color:#8a93a3;font-size:11px}
+.cur-done-lbl{margin-left:auto;font-size:11px;color:#6b7686;display:flex;align-items:center;gap:4px;cursor:pointer}
+.cur-done-badge{margin-left:auto;font-size:10px;font-weight:800;color:#28a745;background:#e6f6ea;border-radius:999px;padding:2px 8px}
+.cur-add-session{margin-top:10px;width:100%;padding:8px;border:1px dashed #c4cdd8;border-radius:8px;background:#fff;
+  color:#5a6473;font:inherit;font-size:12px;cursor:pointer}
+.cur-add-session:hover{border-color:var(--accent);color:var(--accent)}
+.cur-session.cur-drop-hint,.cur-sec.cur-drop-hint{outline:2px dashed var(--accent);outline-offset:2px;background:#eef2ff}
+.cur-filterbar{display:flex;flex-wrap:wrap;gap:4px;align-items:center;padding:7px 10px;border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:3}
+.cur-fbtn{border:1px solid #d5dbe4;background:#f4f6f9;color:#5a6473;border-radius:999px;padding:3px 10px;
+  font:inherit;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap;flex:0 0 auto}
+.cur-fbtn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.cur-fsub{margin-left:4px;font-size:10px;color:#6b7686;display:flex;align-items:center;gap:3px;cursor:pointer}
+.cur-vtoggle{display:inline-flex;border:1px solid #d5dbe4;border-radius:7px;overflow:hidden;margin-right:4px}
+.cur-vbtn{border:0;background:#f4f6f9;color:#5a6473;padding:3px 8px;font:inherit;font-size:11px;font-weight:800;cursor:pointer}
+.cur-vbtn.on{background:#2a3446;color:#fff}
+.cur-grid-wrap{overflow:auto;padding:6px}
+.cur-grid{width:100%;border-collapse:collapse;font-size:11px}
+.cur-grid th{font-weight:800;color:#6b7686;text-align:left;padding:4px 5px;border-bottom:1px solid var(--line)}
+.cur-grid thead th{text-align:center;width:18%}
+.cur-grid tbody th{white-space:nowrap;font-size:10px;color:#3a4453}
+.cur-grid tbody tr.done th{color:#1a7a3a}
+.cur-grid tbody tr.ongoing{background:#fffdf5}
+.cur-gc{padding:4px 5px;border-bottom:1px solid #f0f2f5;text-align:center;vertical-align:middle}
+.cur-gc-n{display:block;font-weight:900;color:#2a3446;font-size:11px}
+.cur-gc-bar{display:block;height:3px;margin-top:2px;border-radius:999px;background:#e9edf2;overflow:hidden}
+.cur-gc-bar>i{display:block;height:100%;background:#2f6feb;border-radius:999px}
+.cur-grid .cur-t-youtube.cur-gc-bar>i,.cur-gc.cur-t-youtube .cur-gc-bar>i{background:#e0483b}
+.cur-gc.cur-t-lecture .cur-gc-bar>i{background:#2f6feb}
+.cur-gc.cur-t-word .cur-gc-bar>i{background:#1e7e34}
+.cur-gc.cur-t-review .cur-gc-bar>i{background:#d98200}
+.cur-grid thead .cur-t-youtube{color:#e0483b}.cur-grid thead .cur-t-lecture{color:#2f6feb}
+.cur-grid thead .cur-t-word{color:#1e7e34}.cur-grid thead .cur-t-review{color:#d98200}
+
+/* ── W08 자료함 위젯 ── */
+.widget-panel[data-widget-panel="library"] .widget-panel-body{padding:0}
+.widget-panel[data-widget-panel="dialogue"] .widget-panel-body,
+.widget-panel[data-widget-panel="board"] .widget-panel-body,
+.widget-panel[data-widget-panel="writing"] .widget-panel-body,
+.widget-panel[data-widget-panel="hangeul1"] .widget-panel-body,
+.widget-panel[data-widget-panel="hangeul2"] .widget-panel-body,
+.widget-panel[data-widget-panel="lecturelist"] .widget-panel-body,
+.widget-panel[data-widget-panel="videolist"] .widget-panel-body{padding:0}
+.widget-tool-frame{width:100%;height:100%}
+.widget-tool-frame iframe{width:100%;height:100%;border:0;display:block;background:#fff}
+.lib-search{font:inherit;font-size:12px;padding:3px 7px;border:1px solid #cfd7e2;border-radius:6px;max-width:150px}
+.lib-root{display:flex;flex-direction:column;height:100%;overflow:auto;background:#f5f7f9;font-size:13px}
+.lib-msg{padding:24px;text-align:center;color:#8a93a3}
+.lib-msg.err{color:#c0392b}
+.lib-hint{padding:8px 10px 4px;font-size:10px;color:#8a93a3;line-height:1.4}
+.lib-sec-h{padding:2px 10px 6px;font-size:11px;font-weight:900;color:#6b7686}
+.lib-chips{display:flex;flex-direction:column;gap:5px;padding:0 10px 12px}
+.lib-chip{display:flex;flex-direction:column;gap:1px;padding:6px 9px;border:1px solid #dbe1e9;border-left:3px solid #2f6feb;
+  border-radius:8px;background:#fff;cursor:grab;user-select:none;touch-action:none}
+.lib-chip:active{cursor:grabbing}
+.lib-chip-unit{font-size:10px;font-weight:800;color:#8a93a3}
+.lib-chip-title{font-size:12px;font-weight:600;color:#2a3446;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lib-ghost{position:fixed;z-index:9999;pointer-events:none;padding:5px 10px;border-radius:8px;font-size:12px;font-weight:700;
+  background:#2f6feb;color:#fff;box-shadow:0 8px 22px rgba(15,23,42,.28);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ── 커리큘럼 대시보드 (내강의실 첫 화면) ── */
+/* 헤더 없이 커리큘럼 보드에 세로 공간을 최대한 준다 */
+.classroom-view{padding-top:16px;padding-bottom:24px}
+.cur-dash{margin-bottom:26px}
+.cd-title{font-size:13px;font-weight:800;color:#51607a;letter-spacing:-.01em}
+.cd-picker{display:inline-flex;align-items:center;gap:5px}
+.cd-picker select{max-width:150px;font:inherit;font-size:12px}
+.cd-msg{padding:20px;background:#fff;border:1px solid #e3e7ee;border-radius:14px;color:#788295;font-size:13px}
+.cd-msg.err{color:#c0392b}
+.cd-msg-sub{display:inline-block;margin-top:6px;font-size:12px;color:#9aa3b1}
+.cd-pending{margin-bottom:16px;border:1px solid #ffe1a8;background:#fffaf0;border-radius:14px;padding:12px 14px}
+.cd-pending-head{font-size:12px;font-weight:800;color:#a16207;margin-bottom:8px}
+.cd-pending-hint{font-weight:700;color:#c08a2e;margin-left:4px}
+.cd-pending-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-top:1px solid #f6e6c4}
+.cd-pending-row:first-of-type{border-top:0}
+.cd-pending-row strong{font-size:13px;color:#374151;flex:0 0 auto}
+.cd-pending-row span{font-size:11px;color:#8a93a2;flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cd-pending-approve{height:28px;padding:0 12px;border:0;border-radius:8px;background:#d97706;color:#fff;font-weight:800;font-size:12px;cursor:pointer;flex:0 0 auto}
+.cd-pending-approve:disabled{opacity:.5;cursor:default}
+.cd-grid-head{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.cd-count{font-size:12px;font-weight:800;color:#5a6473}
+.cd-view-toggle{border:1px solid #d5dbe4;background:#fff;color:#4a5568;border-radius:8px;padding:5px 12px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.cd-view-toggle:hover{background:#f6f8fb}
+.cd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.cd-card{text-align:left;border:1px solid #e0e5ed;background:#fff;border-radius:16px;padding:16px 16px 14px;
+  display:flex;flex-direction:column;gap:9px;cursor:pointer;box-shadow:0 8px 24px rgba(30,43,71,.05);transition:.16s ease}
+.cd-card:hover{transform:translateY(-2px);border-color:#cfd7e6;box-shadow:0 14px 34px rgba(30,43,71,.10)}
+.cd-card-top{display:flex;align-items:center;gap:8px}
+.cd-card-top strong{font-size:16px;letter-spacing:-.02em;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cd-sess-inline{font-size:11px;font-weight:700;color:#7b8596;white-space:nowrap;flex:0 0 auto}
+.cd-lv{font-size:11px;font-weight:800;color:#3f4c63;background:#eef1f7;border-radius:999px;padding:3px 9px;white-space:nowrap;flex:0 0 auto}
+.cd-student-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.cd-student-head h2{margin:4px 0 0;font-size:24px;letter-spacing:-.03em}
+.cd-stats{display:flex;gap:16px}
+.cd-stat{display:flex;flex-direction:column;font-size:11px;color:#7b8596;font-weight:700}
+.cd-stat b{font-size:17px;color:#1f2937;font-weight:900}
+.cd-board-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;
+  position:sticky;top:0;z-index:12;background:#f8faff;padding:10px 0 8px;box-shadow:0 6px 12px -6px rgba(30,43,71,.12)}
+/* 학생 본인 보드: 뒤로가기·선택묶음 없이 제목만 있어 위 여백(padding-top:0)에 바로 붙던 것을 한 줄 내림 */
+.cd-board-top-solo{padding-top:16px}
+/* 회차 보드 화면에서는 상단 여백을 없애 헤더 바로 아래에 붙인다 */
+.account-view:has(#curDashBoard){padding-top:0}
+.cd-back{border:1px solid #d5dbe4;background:#fff;color:#4a5568;border-radius:8px;padding:5px 12px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.cd-back:hover{border-color:var(--accent);color:var(--accent)}
+#curDashBoard .cur-board-head{flex:1}
+#curDashBoard .cur-board-head .widget-head-tools{justify-content:flex-end}
+#curDashBoard .cur-board-body{border:1px solid #e0e5ed;border-radius:16px;background:#fff;overflow:hidden}
+#curDashBoard .cur-root{max-height:none}
+
+
+/* ── 커리큘럼 트리 뷰 = 표 프레임 ── */
+.cur-tree{padding:0}
+/* 헤더로 옮긴 필터바 / 이름 */
+.cur-head{display:flex;align-items:center;flex-wrap:wrap;gap:8px;width:100%}
+.cur-head .cur-filterbar{border:0;padding:0;background:transparent;margin:0}
+.cur-hname{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:800;color:#5a6473}
+.cur-hname input{width:74px;height:22px;border:1px solid #cfd7e2;border-radius:6px;padding:0 6px;font:inherit;font-size:11px}
+.cur-hsep{color:#c4ccd6;font-weight:400}
+.cur-expand-all,.cur-collapse-all{border:1px solid #cfd7e2;background:#fff;color:#5a6473;border-radius:6px;width:24px;height:24px;padding:0;
+  font:inherit;font-size:14px;font-weight:800;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.cur-expand-all:hover,.cur-collapse-all:hover{border-color:var(--accent);color:var(--accent)}
+/* 회차 일괄삭제: 개수는 우측상단 작은 배지로만 표시 — 버튼 폭이 고정이라 헤더가 옆으로 안 밀린다 */
+.cur-sess-bulkdel{position:relative;border:1px solid #cfd7e2;background:#fff;color:#5a6473;border-radius:6px;width:26px;height:24px;padding:0;
+  font-size:12px;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.cur-sess-bulkdel:hover{border-color:#e0483b;color:#e0483b}
+.cur-sess-bulkdel:disabled{opacity:.4;cursor:not-allowed}
+.cur-sess-bulkdel i{position:absolute;top:-6px;right:-6px;background:#e0483b;color:#fff;font-style:normal;font-size:9px;font-weight:800;
+  line-height:1;padding:1px 4px;border-radius:999px;min-width:14px;text-align:center;box-sizing:border-box}
+.cur-preview{display:inline-flex;border:1px solid #cfd7e2;border-radius:7px;overflow:hidden}
+.cur-preview button{border:0;background:#fff;color:#5a6473;font:inherit;font-size:11px;font-weight:800;padding:3px 10px;cursor:pointer}
+.cur-preview button.on{background:#2f54ca;color:#fff}
+.cur-preview-top{margin-right:8px;height:36px;align-items:center}
+.cur-preview-top button{padding:0 12px;height:100%}
+.cur-libtag{font-size:10px;font-weight:800;color:#c23a2e;background:#fdecea;border-radius:999px;padding:1px 7px}
+.cur-hpair{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;color:#2a3446}
+.cur-hpair b{font-weight:900}
+.cur-hdash{color:#8a93a3}
+.cur-hlv{font-size:10px;font-weight:800;color:#3f4c63;background:#eef1f7;border-radius:999px;padding:2px 8px;white-space:nowrap}
+.cur-hbulk{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:800;color:#51607a}
+.cur-bulk-type{display:inline-flex;align-items:center;gap:2px;font-size:10px;font-weight:800;color:#51607a;white-space:nowrap;margin-right:2px}
+.cur-bulk-type input{width:13px;height:13px;margin:0;accent-color:var(--accent);cursor:pointer}
+.cur-bulk-n{width:56px;height:26px;border:1px solid #cfd7e2;border-radius:6px;padding:0 4px 0 8px;font:inherit;font-size:13px;font-weight:800;text-align:left}
+.cur-bulk-from{width:44px;height:26px;border:1px solid #cfd7e2;border-radius:6px;padding:0 2px 0 6px;font:inherit;font-size:13px;font-weight:800;text-align:left;margin-left:6px}
+.cur-hbulk .cur-autofill{border:1px solid #cfd7e2;background:#fff;color:#51607a;border-radius:6px;padding:3px 9px;font:inherit;font-size:11px;font-weight:800;cursor:pointer}
+.cur-hbulk .cur-autofill:hover{border-color:var(--accent);color:var(--accent)}
+.cur-hdist{gap:3px}
+.cur-hdist b{color:#c23a2e;font-weight:900}
+.cur-hdist .cur-bulk-n{width:40px}
+.cur-gear{border:1px solid #cfd7e2;background:#fff;color:#8a93a3;border-radius:6px;width:24px;height:24px;padding:0;font-size:13px;cursor:pointer}
+.cur-gear:hover{color:#2f54ca;border-color:#2f54ca}
+/* 규칙 설정 패널 */
+.cur-bulkcfg{margin:8px;border:1px solid #cfd7e2;background:#f7f9fc;padding:10px 12px;font-size:11px;color:#425268;border-radius:8px}
+.cur-bulkcfg-h{display:flex;align-items:center;gap:12px;font-size:12px;margin-bottom:8px}
+.cur-bulkcfg-h strong{color:#2a3446}
+.cur-bulkcfg-h .cur-rt-int{margin-left:auto;display:inline-flex;align-items:center;gap:5px;font-weight:800}
+.cur-bulkcfg-h .cur-rt-int select{height:24px;border:1px solid #c4cdd8;border-radius:5px;font:inherit;font-size:11px}
+.cur-bulkcfg-h .cur-rt-savebtn{border:1px solid #2f54ca;background:#eef2ff;color:#2f54ca;border-radius:6px;padding:3px 12px;font:inherit;font-size:11px;font-weight:800;cursor:pointer}
+.cur-bulkcfg-h button[data-cur-bulk-cfg-close]{border:0;background:#e7ebf1;border-radius:6px;width:22px;height:22px;cursor:pointer;color:#667}
+/* 셀 내부선 없이 깔끔하게 — 행 구분만 */
+.cur-rt{border-collapse:collapse;width:100%;background:#fff;border:1px solid #d6dde6}
+.cur-rt th,.cur-rt td{border:0;border-bottom:1px solid #eef1f5;padding:5px 8px;text-align:center;font-size:11px}
+.cur-rt tbody tr:last-child td{border-bottom:0}
+.cur-rt thead th{background:#eef1f6;font-weight:900;color:#3a4453;border-bottom:1px solid #dbe1ea}
+.cur-rt-grp td:first-child{background:#f2f8f4;font-weight:900;color:#1a6f2e;vertical-align:middle;border-right:1px solid #e3ebe5}
+.cur-rt-lv{font-weight:800;color:#51607a}
+.cur-rt-cnt{white-space:nowrap;color:#8a93a3;font-weight:700;font-size:12px}
+.cur-rt-cnt input{width:48px;height:30px;border:1px solid #b4bec9;border-radius:6px;text-align:center;font:inherit;font-size:15px;font-weight:800;color:#1f2937;margin:0 5px}
+.cur-rt-cnt input:focus{border-color:var(--accent);outline:2px solid rgba(49,87,213,.18)}
+.cur-rt-lvs{display:flex;gap:4px;justify-content:center}
+.cur-lvchip{border:1px solid #f0c0bb;background:#fff;color:#c23a2e;border-radius:6px;padding:2px 9px;font:inherit;font-size:11px;font-weight:800;cursor:pointer;opacity:.5}
+.cur-lvchip.on{opacity:1;background:#fdecea;border-color:#e0483b}
+.cur-rt-na{color:#c4ccd6}
+.cur-rt-cur{font-size:11px;font-weight:800;color:#2f54ca;background:#eef2ff;border-radius:999px;padding:2px 9px}
+.cur-rt tbody tr.cur-rt-active td{background:#eef4ff}
+.cur-rt tbody tr.cur-rt-active .cur-rt-lv{color:#2f54ca;font-weight:900}
+.cur-rt tbody tr.cur-rt-active.cur-rt-grp td:first-child{background:#e4ecff;color:#2f54ca;border-right-color:#c9d8fb}
+
+/* 계층 박스: 좌열=이름(+토글), 우측=유튜브 | 강의 열 */
+.cur-tier{border:2px solid #8b97a8;margin:0 8px;background:#fff}
+.cur-tier + .cur-tier{border-top:0}
+.cur-tier:first-child{margin-top:8px}
+.cur-tier:last-of-type{margin-bottom:0}
+.cur-tier-main{display:grid;grid-template-columns:82px 1.32fr 1fr;align-items:stretch}
+.cur-tier.is-collapsed .cur-tier-main{grid-template-columns:1fr}
+.cur-tier-name{display:flex;flex-direction:column;align-items:flex-start;gap:5px;border-right:1px solid #d6dde6;background:#eef1f6;padding:8px}
+.cur-tier.is-collapsed .cur-tier-name{border-right:0;flex-direction:row;align-items:center;gap:8px}
+.cur-tier.is-collapsed .cur-tier-xtra{flex-direction:row;align-items:center;gap:8px}
+.cur-tier-tog{display:flex;align-items:center;gap:5px;border:0;background:transparent;padding:0;font:inherit;font-size:12px;font-weight:900;color:#2a3446;cursor:pointer;text-align:left}
+.cur-tier-name-txt{display:flex;align-items:center;gap:5px;flex-wrap:wrap;min-width:0}
+.cur-tier-name-txt strong{font-size:12px;font-weight:900}
+.cur-tier-xtra{display:flex;flex-direction:column;align-items:flex-start;gap:3px;font-size:9px}
+.cur-tier-xtra .cur-tier-date{font-size:9px}
+.cur-tier-xtra .cur-done-lbl,.cur-tier-xtra .cur-start-lbl{font-size:9px;gap:2px;display:flex;align-items:center}
+.cur-tier-xtra .cur-done-lbl input,.cur-tier-xtra .cur-start-lbl input{width:12px;height:12px}
+.cur-tier-xtra .cur-start-lbl{color:#1a6f2e;font-weight:800}
+.cur-lock-badge{font-size:9px;font-weight:800;color:#8a6d1f;background:#fff8e6;border-radius:999px;padding:1px 6px}
+.cur-sess-delrow{display:flex;align-items:center;gap:4px}
+.cur-sess-delrow input{width:12px;height:12px}
+.cur-sess-del{border:1px solid #f0d0cc;background:#fff;color:#c23a2e;border-radius:5px;width:20px;height:18px;padding:0;font-size:10px;line-height:1;cursor:pointer}
+.cur-sess-del:hover:not(:disabled){background:#fdeceb;border-color:#e0483b}
+.cur-sess-del:disabled{opacity:.35;cursor:not-allowed;border-color:#dbe1e9;color:#8a93a3}
+
+/* 회차 잠김 = 학생은 내용만, 액션 불가 */
+.cur-tier.cur-locked .cur-tier-cols,.cur-tier.cur-locked .cur-tier-extra{opacity:.72}
+.cur-tier.cur-locked .cur-it,.cur-tier.cur-locked .cur-it-grip,
+.cur-tier.cur-locked .cur-word,.cur-tier.cur-locked .cur-words-sayall,.cur-tier.cur-locked .cur-words-upd,
+.cur-tier.cur-locked .hw-embed-tab,.cur-tier.cur-locked .hw-embed-edit,.cur-tier.cur-locked [data-cur-review-open],
+.cur-tier.cur-locked [data-hw-static],.cur-tier.cur-locked .cur-note,.cur-tier.cur-locked .cur-note-mic{
+  pointer-events:none!important;filter:grayscale(.2)}
+.cur-lock-note{padding:5px 10px;background:#fff8e6;border-top:1px solid #f0dca6;border-bottom:1px solid #f0dca6;font-size:10px;font-weight:800;color:#8a6d1f}
+.cur-tier-date{color:#8a93a3;font-size:10px;font-weight:700}
+.cur-tog{display:inline-block;width:12px;text-align:center;color:#5a6473;font-size:12px;font-weight:900;flex:0 0 auto}
+.cur-tier-cols{display:contents}
+.cur-tcol{display:flex;flex-direction:column;min-width:0;border-left:1px solid #e0e5ed}
+.cur-tcol:first-child{border-left:0}
+.cur-tcol-head{display:flex;align-items:center;justify-content:space-between;gap:6px;width:100%;
+  font:inherit;font-size:10px;font-weight:900;padding:3px 8px;border:0;border-bottom:1px solid #eef1f5;background:#f7f9fc;cursor:pointer;text-align:left}
+.cur-tcol-open{font-size:8.5px;font-weight:800;color:#8a93a3;border:1px solid #d7dde6;border-radius:0;padding:0 5px;line-height:15px;background:#fff}
+.cur-tcol-hint{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:8px;font-weight:600;opacity:.7}
+.cur-tcol-head:hover .cur-tcol-open{border-color:currentColor;color:currentColor}
+.cur-t-youtube .cur-tcol-head{color:#c23a2e;background:#fdf0ee}
+.cur-t-youtube .cur-tcol-head:hover{background:#fbe6e2}
+.cur-t-lecture .cur-tcol-head{color:#2456c9;background:#eef3fb}
+.cur-t-lecture .cur-tcol-head:hover{background:#e2ecfb}
+.cur-tcol-body{flex:1;padding:6px 8px;min-width:0}
+.cur-t-youtube .cur-tcol-body{background:#f7fafe}
+.cur-t-lecture .cur-tcol-body{background:#f6fbf7}
+
+/* 계층명 옆 회차용 버튼(완료/자동배치) */
+.cur-tier-name .cur-done-lbl{margin:0;font-size:9px;color:#6b7686;display:inline-flex;align-items:center;gap:3px}
+.cur-tier-name .cur-done-badge{margin:0;font-size:9px;font-weight:800;color:#28a745;background:#e6f6ea;border-radius:999px;padding:1px 6px}
+.cur-tier-name .cur-autofill{margin:0;border:1px solid #cfd7e2;background:#fff;color:#51607a;border-radius:6px;padding:1px 6px;font:inherit;font-size:9px;font-weight:800;cursor:pointer}
+
+/* 회차 추가행: 단어 / Q&A / 복습 — 좌: 라벨(한 줄) / 우: 내용 */
+.cur-tier-extra{display:flex;flex-direction:column;border-top:1px solid #d6dde6}
+.cur-erow{display:grid;grid-template-columns:84px 1fr;border-top:1px solid #eef1f5}
+.cur-erow:first-child{border-top:0}
+.cur-erow.is-erow-collapsed{grid-template-columns:1fr}
+.cur-erow-h{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;align-content:flex-start;gap:4px 6px;
+  padding:7px 6px;font-size:10.5px;font-weight:900;color:#3a4453;background:#f2f5f8;border-right:1px solid #e0e5ed;overflow:hidden}
+.cur-erow.is-erow-collapsed .cur-erow-h{border-right:0;background:#f7f9fb}
+.cur-erow-tog{border:1px solid #cfd7e2;background:#fff;color:#51607a;border-radius:4px;width:16px;height:16px;padding:0;font-size:11px;line-height:1;cursor:pointer;flex:0 0 auto}
+.cur-erow-tog:hover{border-color:var(--accent);color:var(--accent)}
+.cur-erow-name{font-weight:900;flex:0 0 auto}
+.cur-erow-dot{width:7px;height:7px;border-radius:50%;background:#e0483b;display:inline-block;flex:0 0 auto}
+.cur-erow-tools{display:flex;flex-direction:row;gap:4px;align-items:center;flex:1 1 auto}
+.cur-erow-tools .cur-words-sayall{font-size:9px;padding:2px 6px;font-weight:800;white-space:nowrap}
+.cur-erow-tools .cur-words-upd{width:18px;height:18px;font-size:10px;flex:0 0 auto}
+.cur-t-word .cur-erow-name{color:#1a6f2e}
+.cur-t-qa .cur-erow-name{color:#2456c9}
+.cur-t-review .cur-erow-name{color:#b56e00}
+.cur-erow-b{padding:6px 8px;min-width:0}
+.cur-cell-empty{font-size:10px;color:#aab2bd;padding:3px 0}
+
+/* 항목 = 고정 크기 카드 (셀 폭에 안 늘어남) · 유튜브 한 줄 3개 / 강의 한 줄 4개 */
+.cur-cell-grid{display:flex;flex-wrap:wrap;gap:7px;align-content:flex-start;min-height:40px}
+.cur-cell-grid.cur-drop-hint{outline:2px dashed var(--accent);outline-offset:-3px;background:#eef2ff}
+/* 자료함(iframe)에서 끌어오는 중 = 받을 수 있는 칸 표시 */
+body.koredu-ext-drag [data-cur-drop]{outline:1px dashed #b9c8e7;outline-offset:-3px}
+body.koredu-ext-drag [data-cur-drop].cur-drop-hint{outline:2px solid var(--accent);background:#e3ebff}
+.cur-ext-ghost{position:fixed;z-index:99999;pointer-events:none;padding:5px 11px;border-radius:8px;
+  font-size:12px;font-weight:800;background:#2f6feb;color:#fff;box-shadow:0 8px 22px rgba(15,23,42,.28);
+  max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.koredu-ext-drag{cursor:grabbing}
+.cur-it{position:relative;display:flex;flex-direction:column;gap:3px;border:1px solid #dbe1e9;border-radius:7px;background:#fff;padding:4px;flex:0 0 auto;cursor:pointer;user-select:none}
+.cur-it img,.cur-it .cur-it-ref,.cur-it .cur-it-title{-webkit-user-drag:none;user-drag:none}
+.cur-it:hover{border-color:#b9c8e7;box-shadow:0 2px 8px rgba(30,43,71,.08)}
+.cur-it-grip{position:absolute;top:3px;left:3px;z-index:2;width:16px;height:18px;display:flex;align-items:center;justify-content:center;
+  border-radius:4px;background:rgba(255,255,255,.9);color:#9aa4b2;font-size:11px;line-height:1;cursor:grab;user-select:none}
+.cur-it-grip:hover{color:#2f6feb;background:#fff}
+.cur-it-grip:active{cursor:grabbing}
+.cur-it-badge{align-self:flex-start;margin-left:19px;font-size:8.5px;font-weight:900;color:#51607a;background:#eef1f7;border-radius:4px;padding:0 5px;line-height:15px}
+.cur-it:active{cursor:grabbing}
+.cur-it-dragging{opacity:.4}
+.cur-grid-yt .cur-it{width:158px}
+.cur-grid-lec .cur-it{width:158px}
+.cur-grid-lec .cur-it-ref{align-self:stretch;text-align:center;padding:5px 4px;font-size:11px}
+.cur-it-thumbwrap{display:block;border-radius:5px;overflow:hidden;line-height:0}
+.cur-it-thumb{width:100%;height:90px;object-fit:cover;background:#eceff3;display:block}
+.cur-it-ref{align-self:flex-start;font-size:9px;font-weight:800;color:#2456c9;background:#e6efff;border-radius:4px;padding:1px 5px}
+.cur-it-title{font-size:10.5px;font-weight:700;color:#2a3446;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cur-it-foot{display:flex;align-items:center;gap:5px;font-size:9px}
+.cur-it-pct{font-weight:900;color:#2f6feb;flex:0 0 auto}
+.cur-it-bar{flex:1;min-width:14px;height:4px;border-radius:999px;background:#e9edf2;overflow:hidden}
+.cur-it-bar>i{display:block;height:100%;background:#2f6feb;border-radius:999px}
+.cur-t-youtube .cur-it-bar>i{background:#e0483b}.cur-t-youtube .cur-it-pct{color:#e0483b}
+/* 강의 카드는 더 좁으므로 진도바 생략, 제목 3줄 */
+.cur-grid-lec .cur-it-foot{gap:5px}
+.cur-it-del{position:absolute;top:3px;right:3px;z-index:2;border:0;background:rgba(255,255,255,.9);color:#8a93a3;font-size:12px;line-height:1;cursor:pointer;border-radius:4px;width:18px;height:18px}
+.cur-it-del:hover{color:#e0483b;background:#fff}
+.cur-it-prog{border:1px solid #cfd7e2;background:#fff;color:#8a93a3;font-size:10px;cursor:pointer;padding:1px 5px;border-radius:5px}
+.cur-it-prog:hover{color:#2f6feb;border-color:#2f6feb}
+
+/* 단어 칸 — 한국어 + 로마자·번역 + 듣기 */
+.grammar-widget{display:flex;flex-direction:column;height:100%}
+.grammar-msg{padding:24px;text-align:center;color:#8a93a3}
+.grammar-sortbar{display:flex;gap:6px;padding:8px 10px;border-bottom:1px solid #eef1f5;flex:0 0 auto}
+.grammar-sortbar button{border:1px solid #d5dbe4;background:#fff;color:#5a6473;border-radius:7px;padding:3px 10px;font:inherit;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap}
+.grammar-sortbar button.on{background:#2f54ca;border-color:#2f54ca;color:#fff}
+.grammar-list{flex:1 1 auto;overflow:auto;padding:6px 10px}
+.grammar-row{display:grid;grid-template-columns:44px 1fr 320px;gap:8px;align-items:center;padding:7px 4px;border-bottom:1px solid #f0f2f5;cursor:pointer}
+.grammar-row:hover{background:#f8faff}
+.grammar-row-time{font-size:10px;font-weight:800;color:#8a93a3}
+.grammar-row-text{font-size:12px;color:#273349;min-width:0}
+.grammar-chunk{font-weight:800;cursor:pointer;border-radius:3px;transition:background-color .1s}
+.grammar-chunk.grammar-hl{background:#fef08a}
+.grammar-chunk.grammar-selected{background:#fde68a;box-shadow:0 0 0 1.5px #d97706 inset}
+.grammar-widget.show-unreg .grammar-chunk-unreg{text-decoration:underline;text-decoration-color:#94a3b8;text-decoration-thickness:2px}
+.grammar-row-lesson{display:flex;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:flex-start;align-content:flex-start;gap:4px 10px;width:320px;color:#1f2937}
+.grammar-row-lesson-item{display:flex;flex-direction:column;align-items:flex-start;line-height:1.25;cursor:pointer;border-radius:4px;padding:1px 3px;flex:0 0 90px;width:90px;min-width:0}
+.grammar-row-lesson-item.grammar-hl{background:#fef08a}
+.grammar-row-lesson-item.grammar-selected{background:#fde68a;box-shadow:0 0 0 1.5px #d97706 inset}
+.grammar-row-lesson-item b{font-size:10px;color:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;min-width:0}
+.grammar-row-lesson-item span{font-size:9.5px;color:inherit;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;min-width:0;display:block}
+.grammar-flat-list{flex:1 1 auto;overflow:auto;padding:6px 10px}
+.grammar-flat-row{display:flex;align-items:center;gap:7px;padding:6px 4px;border-bottom:1px solid #f0f2f5;border-radius:4px}
+.grammar-flat-row:hover{background:#f8faff}
+.grammar-flat-row.grammar-selected{background:#fef3c7}
+/* 강의·타임스탬프는 "반전"(채워진 배지) 스타일 — 타임스탬프는 유튜브 자막 목록의 시간 배지와 같은 톤 */
+.grammar-flat-lesson{font-size:11px;font-weight:900;color:#fff;background:#2f54ca;border-radius:7px;padding:3px 8px;cursor:pointer;flex:0 0 auto;white-space:nowrap}
+.grammar-flat-lesson:hover{background:#eef1ff;color:#2f54ca}
+.grammar-flat-vid{font-size:10px;font-weight:700;color:#9aa3b1;flex:0 0 auto;white-space:nowrap;cursor:default}
+.grammar-flat-sep{color:#cbd2de;flex:0 0 auto}
+.grammar-flat-time{font-size:11px;font-weight:900;color:#155eef;background:#eaf2ff;border-radius:7px;padding:3px 8px;cursor:pointer;flex:0 0 auto;white-space:nowrap}
+.grammar-flat-time:hover{background:#155eef;color:#fff}
+.grammar-flat-text{font-size:12px;color:#273349;min-width:0}
+.grammar-flat-text .grammar-chunk{font-weight:800}
+.cur-word-collapse-all-btn{border:1px solid #cfd7e2;background:#fff;color:#5a6473;border-radius:6px;height:24px;padding:0 8px;
+  font:inherit;font-size:11px;font-weight:800;line-height:1;white-space:nowrap;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.cur-word-collapse-all-btn:hover{border-color:var(--accent);color:var(--accent)}
+.cur-word-collapse-all-btn:disabled{opacity:.5;cursor:default}
+.cur-words{margin-bottom:8px;display:flex;align-items:flex-start;gap:8px}
+.cur-words.cur-words-merged{display:block}
+.cur-words-head{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:9px;color:#8a93a3;margin-bottom:5px}
+.cur-words:not(.cur-words-merged) .cur-words-head{flex:0 0 auto;flex-wrap:nowrap;white-space:nowrap;margin-bottom:0}
+.cur-words:not(.cur-words-merged) .cur-words-list{flex:1 1 auto;margin-top:1px}
+.cur-words-id{font-weight:800}
+.cur-words-pct{font-weight:900;color:#1a6f2e}
+/* 강의교재(KorLecture)의 '오늘의 단어' 칩과 동일한 글자·양식 */
+.cur-words-sayall{border:1px solid #c7d6ff;background:#eef3ff;color:#2756d8;border-radius:8px;padding:3px 9px;font:inherit;font-size:10px;font-weight:850;cursor:pointer}
+.cur-words-sayall:hover{background:#e2ebff}
+.cur-words-upd{border:1px solid #d5dbe4;background:#fff;color:#8a93a3;border-radius:7px;width:22px;height:22px;padding:0;font-size:12px;line-height:1;cursor:pointer}
+.cur-words-upd:hover{color:#2f54ca;border-color:#2f54ca;background:#f4f7ff}
+.cur-words-upd.spin{animation:curSpin .7s linear infinite}
+@keyframes curSpin{to{transform:rotate(360deg)}}
+.cur-words-src-label{font-size:9.5px;font-weight:900;color:#8a94a6;margin-bottom:4px}
+.cur-words-list{display:flex;flex-wrap:wrap;gap:6px}
+.cur-words.is-collapsed .cur-words-list{display:none}
+.cur-words-toggle{border:1px solid #d5dbe4;background:#fff;color:#5a6473;border-radius:5px;width:18px;height:18px;padding:0;font-size:11px;font-weight:900;line-height:1;cursor:pointer;flex:0 0 auto}
+.cur-words-toggle:hover{border-color:var(--accent);color:var(--accent)}
+.cur-words-check{display:flex;align-items:center;gap:4px;cursor:pointer;flex:1 1 auto;min-width:0}
+.cur-words-check input{accent-color:var(--accent);cursor:pointer;width:13px;height:13px;flex:0 0 auto}
+.cur-flsort button:disabled{opacity:.4;cursor:not-allowed}
+.cur-word{display:flex;flex-direction:column;gap:1px;min-width:0;padding:6px 9px;background:#fff;border:1px solid #dfe5ef;border-radius:9px;cursor:pointer;text-align:left;font:inherit;color:#182033;line-height:1.25}
+.cur-word:hover{border-color:#b9c8e7;background:#f8faff}
+.cur-word-korow{display:flex;align-items:center;gap:6px}
+.cur-word-audio{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:999px;background:#eef4ff;color:#175cd3;font-size:11px;flex:0 0 auto}
+.cur-word-ko{font-size:14px;font-weight:850;color:#283449;white-space:nowrap}
+.cur-word-sub{font-size:10.5px;font-weight:650;color:#526173;line-height:1.25;max-width:150px;margin-top:1px}
+
+/* 복습 칸 (회차당 1개 · 일기장 첨삭) */
+.cur-review{margin-bottom:6px}
+.cur-review-tools{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.cur-review-img{display:block;max-width:100%;max-height:240px;border:1px solid #e0d0e8;border-radius:8px;object-fit:contain;margin-bottom:6px}
+.cur-review-cmts{margin:5px 0 0;padding-left:16px;font-size:11px;color:#8a5a12;line-height:1.5}
+.cur-review-cmts li{margin:1px 0}
+
+.cur-tree-foot{padding:8px 10px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.cur-tree-foot .cur-add-session{margin:0}
+@media(max-width:520px){.cur-grid2,.cur-grid2.cols-2{grid-template-columns:1fr}}
+
+/* 회차 Q/A 입력 + 🎤 음성입력 */
+.cur-note-wrap{position:relative}
+.cur-note{width:100%;border:1px solid #cfd7e2;border-radius:6px;padding:4px 8px;font:inherit;font-size:11px;resize:vertical;min-height:34px;background:#fff}
+.cur-erow-h .cur-note-mic{position:static}
+.cur-note[readonly]{background:#f6f7f9;color:#5a6473;padding-right:6px}
+.cur-note-mic{position:absolute;right:5px;bottom:6px;width:20px;height:20px;padding:0;border:1px solid #d5dbe4;border-radius:6px;background:#fff;font-size:11px;line-height:1;cursor:pointer;opacity:.7}
+.cur-note-mic:hover{opacity:1;border-color:var(--accent)}
+.cur-note-mic.rec{opacity:1;border-color:#e0483b;background:#fdecea;animation:curMicPulse 1s ease-in-out infinite}
+@keyframes curMicPulse{50%{box-shadow:0 0 0 3px rgba(224,72,59,.18)}}
+
+/* Q : A 한 줄 배치 */
+.cur-qa-row{display:flex;align-items:flex-start;gap:8px}
+.cur-qa-fld{flex:1 1 0;min-width:0;display:flex;align-items:flex-start;gap:6px}
+.cur-qa-fld .cur-note{flex:1 1 auto}
+/* 질문/답변 칸: 3줄 시작 → 최대 10줄까지 자동 확장(JS) → 이후 스크롤 */
+.cur-note-grow{resize:none;min-height:calc(1.35em * 3 + 10px);line-height:1.35;overflow-y:hidden}
+/* 메모(W16) 위젯 안의 칸은 공간이 넉넉하므로 15줄부터 시작 */
+[data-widget-panel="memo"] .cur-note-grow{min-height:calc(1.35em * 15 + 10px)}
+.cur-qa-lbl{display:inline-flex;flex-direction:column;align-items:flex-start;gap:3px;font-size:10.5px;font-weight:900;padding-top:8px;white-space:nowrap}
+.cur-qa-q .cur-qa-lbl{color:#2456c9}
+.cur-qa-a .cur-qa-lbl{color:#1a6f2e}
+.cur-qa-lbl .cur-note-mic{position:static;width:18px;height:18px;font-size:10px;order:-1}
+.cur-qa-seq{font-size:11px;font-weight:900;color:#3a4453}
+.cur-qa-date{font-size:9px;font-weight:700;color:#8a94a4}
+.cur-qa-sep{align-self:center;font-weight:900;color:#9aa4b2}
+.cur-fl-qabody{padding:8px}
+.cur-fl-qa{border:1px solid #e6eaf0;border-radius:8px;padding:6px 8px;margin-bottom:8px;background:#fff}
+.cur-fl-qa .cur-erow{display:block;border:0}
+.cur-fl-qa .cur-erow-h{display:none}
+.cur-fl-sentence{border:1px solid #e6eaf0;border-radius:8px;padding:6px 8px;margin-bottom:8px;background:#fff;display:flex;align-items:flex-start;gap:10px}
+.cur-fl-sentence-h{display:flex;align-items:center;gap:8px;font-size:10.5px;font-weight:900;color:#556177;margin-bottom:0;flex:0 0 auto;white-space:nowrap}
+.cur-fl-sentence-h + *{flex:1 1 auto;min-width:0}
+.cur-sentences-add{display:flex;gap:6px;margin-bottom:6px}
+.cur-sentence-add-input{flex:1;min-width:0;height:28px;border:1px solid #d7dee9;border-radius:7px;padding:0 8px;font-size:12px}
+.cur-sentence-add-btn{height:28px;padding:0 10px;border:0;border-radius:7px;background:#111827;color:#fff;font-size:11px;font-weight:900;cursor:pointer}
+.cur-sentences-list{display:flex;flex-direction:column;gap:4px}
+.cur-sentence-row{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;color:#273349;padding:3px 0;border-bottom:1px dashed #eef1f5}
+.cur-sentence-row:last-child{border-bottom:0}
+.cur-sentence-del-btn{border:0;background:transparent;color:#b3bac6;font-size:14px;font-weight:900;cursor:pointer;padding:0 4px;line-height:1}
+.cur-sentence-del-btn:hover{color:#dc2626}
+.cur-cell.cur-t-q .cur-cell-h{color:#2456c9}
+.cur-cell.cur-t-a .cur-cell-h{color:#1a6f2e}
+.cur-review-up{font-size:9px;font-weight:800;color:#2f6feb;cursor:pointer;border:1px solid #cfe0fb;border-radius:5px;padding:1px 5px;background:#fff}
+.cur-review-cmt{font-size:9px;font-weight:800;color:#b56e00;cursor:pointer;border:1px solid #f0dca6;border-radius:5px;padding:1px 5px;background:#fff}
+.cur-review-body{min-height:60px}
+.cur-review-img{display:block;max-width:100%;max-height:280px;border:1px solid #e0d0e8;border-radius:8px;object-fit:contain;margin-bottom:6px}
+.cur-review-cmts{margin:0;padding-left:16px;font-size:11px;color:#8a5a12;line-height:1.5}
+.cur-review-cmts li{margin:1px 0}
+/* W04 복습(첨삭) 위젯을 복습 칸에 그대로 임베드 */
+.cur-t-review.cur-cell{padding:0;display:block}
+.hw-embed{display:flex;flex-direction:column;height:380px;border:1px solid #e0d0e8;border-radius:10px;overflow:hidden;background:#fff}
+/* 편집 중 = 화면을 최대한 꽉 채운다. 대화(talk)는 활성 여부와 상관없이 항상 세로로 꽉 채운다. */
+.cur-review.is-active .hw-embed, .cur-review[data-cur-review-tab="talk"] .hw-embed{height:calc(100vh - 104px);min-height:560px}
+.hw-embed-head{display:flex;align-items:center;gap:6px;padding:6px 8px;border-bottom:1px solid #eee;background:#faf6fc;flex-wrap:wrap;flex:0 0 auto}
+.hw-embed-title{font-size:11px;font-weight:900;color:#8a5a9c;flex:0 0 auto}
+.hw-embed-head .hw-embed-tools{flex:1 1 auto;min-width:0}
+.hw-embed-head .widget-head-tools{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.hw-embed-edit{border:1px solid #e2d2ea;background:#fff;color:#8a5a9c;border-radius:6px;padding:2px 9px;font:inherit;font-size:11px;font-weight:800;cursor:pointer}
+.hw-embed-edit:hover{border-color:#c07bd8;color:#a33ec9;background:#fdf7ff}
+.hw-embed-close{border:1px solid #e2d2ea;background:#fff;color:#8a5a9c;border-radius:6px;padding:2px 9px;font:inherit;font-size:11px;font-weight:800;cursor:pointer;flex:0 0 auto}
+.hw-embed-close:hover{border-color:#c07bd8;color:#a33ec9}
+.hw-embed-body{flex:1 1 auto;min-height:0;position:relative;overflow:hidden}
+.hw-embed-body .hw-root{height:100%}
+.cur-review:not(.is-active) .hw-embed-body{cursor:pointer}
+.hw-drop-static{margin:12px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  border:2px dashed #e0d0e8;border-radius:12px;color:#a98bb8;text-align:center;height:calc(100% - 24px)}
+.hw-drop-static strong{color:#8a5a9c;font-size:12px}
+.hw-drop-static span{font-size:11px}
+
+/* ── 프레임(계층 표)만 직각. 내부 메뉴·카드·버튼은 라운딩 유지 ── */
+.cur-tier, .cur-tier-name, .cur-tier-cols, .cur-tcol, .cur-tcol-head, .cur-tcol-body,
+.cur-tier-extra, .cur-erow, .cur-erow-h, .cur-erow-b,
+#curDashBoard .cur-board-body, .cur-fl-body { border-radius: 0 !important; }
+
+/* ── 필터 유형 = 평면 나열 ── */
+.cur-flsort{display:flex;gap:6px;padding:8px 10px;border-bottom:1px solid var(--line);background:#fbfcfe}
+.cur-flsort button{border:1px solid #d5dbe4;background:#fff;color:#5a6473;border-radius:7px;padding:3px 10px;font:inherit;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap;flex:0 0 auto}
+.cur-flsort button.on{background:#2f54ca;border-color:#2f54ca;color:#fff}
+.cur-fl-body{padding:10px}
+.cur-fl-rev{font-size:11px;color:#6b7686;padding:5px 2px;border-bottom:1px solid #eef1f5}
+
+/* ── 대화/판서/복습 필터 목록: 회차별로 실제 내용을 그대로 인라인 표시 ── */
+.cur-fl-talklist{display:flex;flex-direction:column;gap:12px}
+.cur-fl-talk{border:1px solid #dbe1e9;border-radius:10px;background:#fff;padding:8px;display:flex;align-items:flex-start;gap:10px}
+.cur-fl-talk-h{display:flex;align-items:center;gap:8px;padding:0;flex:0 0 auto;white-space:nowrap}
+.cur-fl-talk-h b{font-size:12px}
+.cur-fl-talk-h span{font-size:11px;color:#8a93a3}
+.cur-fl-talk-h + *{flex:1 1 auto;min-width:0}
+.cur-fl-has{font-size:13px;line-height:1}
+.cur-fl-has.has{color:#e0483b}
+.cur-words-src{font-weight:800;color:#51607a}
+
+/* ── 복습 영역 탭 (대화 / 판서 / 복습) ── */
+.hw-embed-tabs{display:flex;gap:4px;flex:0 0 auto}
+.hw-embed-tab{border:1px solid #e2d2ea;background:#fff;color:#8a5a9c;border-radius:6px;padding:2px 10px;font:inherit;font-size:11px;font-weight:800;cursor:pointer}
+.hw-embed-tab.on{background:#8a5a9c;border-color:#8a5a9c;color:#fff}
+.cur-talk-wrap{padding:10px}
+.cur-talk-wrap:has(.widget-tool-frame){padding:0}
+.cur-talk-wrap .widget-tool-frame{height:100%;border-radius:0 0 10px 10px;overflow:hidden}
+.cur-talk{width:100%;height:100%;min-height:200px;border:1px solid #cfd7e2;border-radius:8px;padding:8px 10px;font:inherit;font-size:12px;line-height:1.6;resize:none}
+.cur-talk[readonly]{background:#f6f7f9;color:#5a6473}
+
+/* ── Q/A 마이크 = 라벨 옆(앞쪽) ── */
+.cur-erow-h .cur-note-mic{width:20px;height:20px;padding:0;border:1px solid #d5dbe4;border-radius:6px;background:#fff;font-size:11px;line-height:1;cursor:pointer;opacity:.75}
+.cur-erow-h .cur-note-mic:hover{opacity:1;border-color:var(--accent)}
+.cur-erow-h .cur-note-mic.rec{opacity:1;border-color:#e0483b;background:#fdecea;animation:curMicPulse 1s ease-in-out infinite}
+.cur-note-wrap .cur-note{padding-right:8px}
+
+/* ── 유튜브 썸네일: 글자 안 잘리게 ── */
+.cur-it-thumb{object-fit:contain !important;background:#0d0d0d}
+
+/* ── 판서(ScreenInk) 캡처 저장 목록 ── */
+/* 트리거 버튼(#siGalleryBtn)은 이제 ScreenInk 도구막대 Shadow DOM 안에 살아서 여기 CSS가 안 먹는다
+   — 배지(si-gallery-badge-css, siEnsureGalleryButton 참고)는 그 shadow root 안에 따로 주입한다. */
+/* 화면 아래로 넘치면 패널 안에서 스크롤(높이는 JS siPositionGalleryPanel 이 뷰포트에 맞춰 지정) —
+   헤더(.si-gallery-head)는 sticky 라 스크롤해도 계속 보인다. */
+/* 좌우 폭은 JS(siPositionGalleryPanel)가 도구막대 폭에 맞춰 매번 지정 — 여기 min-width 는 그 전 기본값. */
+.si-gallery-panel{position:fixed;min-width:260px;overflow-x:hidden;overflow-y:auto;background:#fff;z-index:2147483647;
+  border:1px solid #dbe1e9;border-radius:12px;box-shadow:0 12px 32px rgba(15,23,42,.18)}
+.si-gallery-head{display:flex;align-items:center;gap:7px;padding:9px 10px;border-bottom:1px solid #eef1f5;
+  font-size:12px;font-weight:800;color:#334155;position:sticky;top:0;background:#fff;border-radius:12px 12px 0 0}
+.si-gallery-head #siGalleryHeadLabel{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.si-gallery-all{display:flex;align-items:center;gap:3px;font-size:11px;font-weight:700;color:#5a6473;white-space:nowrap;cursor:pointer}
+.si-gallery-viewall{border:1px solid #cfe0ff;background:#eef4ff;color:#2159c9;border-radius:6px;padding:3px 8px;
+  font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap}
+.si-gallery-viewall:hover{background:#dfeaff}
+.si-gallery-refresh{border:1px solid #d5dbe4;background:#fff;color:#5a6473;border-radius:6px;width:24px;height:24px;
+  padding:0;font-size:13px;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.si-gallery-refresh:hover{border-color:var(--accent);color:var(--accent)}
+.si-gallery-refresh.spin{animation:curSpin .7s linear infinite}
+.si-gallery-delsel{border:1px solid #f1c4c4;background:#fdeaea;color:#c0392b;border-radius:6px;width:24px;height:24px;
+  padding:0;font-size:12px;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.si-gallery-delsel:hover{background:#fbdcdc;border-color:#e0483b}
+.sent-del-btn{border-color:#f1c4c4;background:#fdeaea;color:#c0392b}
+.sent-del-btn:hover:not(:disabled){background:#fbdcdc;border-color:#e0483b;color:#c0392b}
+.si-gallery-close{border:0;background:transparent;color:#8a93a3;font-size:16px;line-height:1;cursor:pointer;padding:2px 4px}
+.si-gallery-close:hover{color:#334155}
+.si-gallery-empty{padding:20px 14px;font-size:12px;color:#8a93a3;text-align:center}
+.si-gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px}
+.si-gallery-item{position:relative;display:flex;flex-direction:column;gap:2px}
+.si-gallery-checkwrap{position:absolute;top:3px;left:3px;z-index:1;background:rgba(255,255,255,.85);
+  border-radius:5px;padding:1px;line-height:0}
+.si-gallery-checkwrap input{display:block;margin:0;cursor:pointer}
+.si-gallery-view{position:relative;display:block;width:100%;aspect-ratio:1/1;border:1px solid #dbe1e9;border-radius:8px;overflow:hidden;
+  padding:0;cursor:pointer;background:#f6f8fa}
+.si-gallery-view img{width:100%;height:100%;object-fit:cover;display:block}
+.si-gallery-view span{position:absolute;left:3px;bottom:3px;background:rgba(0,0,0,.6);color:#fff;font-size:9px;font-weight:800;
+  line-height:1;padding:2px 5px;border-radius:999px}
+.si-gallery-view:hover{border-color:var(--accent)}
+.si-gallery-cap{font-size:9px;color:#8a93a3;line-height:1.2;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px}
+.si-gallery-del{position:absolute;top:2px;right:2px;z-index:1;width:16px;height:16px;border:0;border-radius:999px;
+  background:rgba(0,0,0,.55);color:#fff;font-size:11px;line-height:1;cursor:pointer;padding:0}
+.si-gallery-del:hover{background:#e0483b}
+
+/* ── 강의실 "판서" 탭 — 위젯 판서(ScreenInk)와 같은 캡처 목록을 인라인으로 ── */
+.cur-board-wrap{padding:10px;overflow-y:auto}
+.cur-board-add{border:1px solid #cfd7e2;background:#fff;color:#5a6473;border-radius:8px;padding:6px 12px;
+  font:inherit;font-size:11px;font-weight:800;cursor:pointer;margin-bottom:8px}
+.cur-board-add:hover{border-color:var(--accent);color:var(--accent)}
+.cur-board-empty{padding:16px 4px;font-size:12px;color:#8a93a3;text-align:center}
+.cur-board-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:8px}
+.cur-board-item{position:relative;display:flex;flex-direction:column;gap:2px}
+.cur-board-view{position:relative;display:block;width:100%;aspect-ratio:1/1;border:1px solid #dbe1e9;border-radius:8px;
+  overflow:hidden;padding:0;cursor:pointer;background:#f6f8fa}
+.cur-board-view img{width:100%;height:100%;object-fit:cover;display:block}
+.cur-board-view span{position:absolute;left:3px;bottom:3px;background:rgba(0,0,0,.6);color:#fff;font-size:9px;
+  font-weight:800;line-height:1;padding:2px 5px;border-radius:999px}
+.cur-board-view:hover{border-color:var(--accent)}
+.cur-board-cap{font-size:9px;color:#8a93a3;line-height:1.2;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px}
+.cur-board-del{position:absolute;top:2px;right:2px;z-index:1;width:16px;height:16px;border:0;border-radius:999px;
+  background:rgba(0,0,0,.55);color:#fff;font-size:11px;line-height:1;cursor:pointer;padding:0}
+.cur-board-del:hover{background:#e0483b}
+
+/* 시크릿 모드: 포털 화면 안 유튜브 섬네일 숨김 */
+body.koredu-secret .cur-it-thumb{visibility:hidden}
+body.koredu-secret .cur-it-thumbwrap{background:#eceff3}

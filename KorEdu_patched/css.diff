@@ -1,0 +1,15 @@
+--- C:/Users/RMKNote/AppData/Local/Temp/claude/C------Markup/07800133-eba9-4966-9a21-2852c08cdab2/scratchpad/orig/portal.css
++++ portal.css
+@@ -1156,9 +1156,9 @@
+ @media(max-width:1120px){.reading-prefs-bar{display:none}}
+ 
+ /* 회원관리: 회원ID + 담당 선생님 열 추가 (6열) */
+-.admin-user-row{grid-template-columns:66px minmax(160px,1.7fr) 96px 58px minmax(120px,1.1fr) 78px}
++.admin-user-row{grid-template-columns:66px minmax(160px,1.7fr) 96px 62px 84px minmax(120px,1.1fr) 78px}
+ .admin-user-row [data-roster-teacher]{width:100%}
+-@media(max-width:900px){.admin-user-row{grid-template-columns:60px minmax(150px,1.6fr) 88px minmax(110px,1fr) 70px}.admin-user-row>*:nth-child(4){display:none}}
++@media(max-width:900px){.admin-user-row{grid-template-columns:60px minmax(150px,1.6fr) 88px 80px minmax(110px,1fr) 70px}.admin-user-row>*:nth-child(4){display:none}}
+ 
+ /* ── W05 커리큘럼 위젯 ── */
+ .widget-panel[data-widget-panel="curriculum"] .widget-panel-body{padding:0}
+
