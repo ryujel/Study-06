@@ -163,6 +163,12 @@ def ensure_member_ids() -> None:
     with LOCK:
         users = _read_json(USERS_FILE, {})
         changed = False
+        # 관리자 번호 접두사 A → AT: 예전 번호(A01)를 AT01로 바꾸고 이력에 남긴다(서버 시작 시 1회, 이미 AT면 건너뜀).
+        for u in sorted((x for x in users.values() if x.get('role') == 'admin'), key=lambda x: x.get('created_at') or 0):
+            if re.fullmatch(r'A\d+', str(u.get('member_id') or '')):
+                assign_member_id(u, users)
+                u['updated_at'] = now_ts()
+                changed = True
         missing = [u for u in users.values() if u.get('email_verified') and not u.get('member_id')]
         missing.sort(key=lambda u: u.get('created_at') or 0)
         for u in missing:
