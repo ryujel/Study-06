@@ -38,6 +38,16 @@ AUTH_LV_DEFAULT = {'admin': 0, 'teacher': 1, 'student': 2, 'guest': 10}
 # 학습등급: 학생의 한국어 실력 구분(권한등급과 별개). 학생/손님에게만 의미가 있다. 기본은 초급.
 LEARNING_LEVELS = ('초급', '중급', '고급')
 LEARNING_LEVEL_DEFAULT = '초급'
+# 강의 급수(Lev 1~4)는 4단계라 학습등급 3단계로 묶는다: Lev1=초급, Lev2·3=중급, Lev4=고급.
+LECTURE_LEVEL_TO_LEARNING = {1: '초급', 2: '중급', 3: '중급', 4: '고급'}
+
+
+def learning_level_for(user: dict) -> str:
+    """저장된 학습등급이 없을 때의 기본값 — 회원의 강의 급수(level)에서 정한다."""
+    try:
+        return LECTURE_LEVEL_TO_LEARNING.get(int(user.get('level', 1)), LEARNING_LEVEL_DEFAULT)
+    except (TypeError, ValueError):
+        return LEARNING_LEVEL_DEFAULT
 
 
 def auth_lv_for_role(role: str) -> int:
@@ -167,7 +177,7 @@ def ensure_member_ids() -> None:
                 u['auth_lv'] = auth_lv_for_role(u.get('role', 'student'))
                 changed = True
             if u.get('email_verified') and u.get('role') in ('student', 'guest') and u.get('learning_level') not in LEARNING_LEVELS:
-                u['learning_level'] = LEARNING_LEVEL_DEFAULT
+                u['learning_level'] = learning_level_for(u)
                 changed = True
         if changed:
             _write_json(USERS_FILE, users)
@@ -1416,7 +1426,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 if learning in LEARNING_LEVELS:
                     user['learning_level'] = learning
                 elif user.get('learning_level') not in LEARNING_LEVELS:
-                    user['learning_level'] = LEARNING_LEVEL_DEFAULT
+                    user['learning_level'] = learning_level_for(user)
             else:
                 user.pop('learning_level', None)
             user['updated_at'] = now_ts()
@@ -2311,7 +2321,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             if 'approved' not in user:
                 user['approved'] = user.get('role') != 'student'
             if user.get('role') in ('student', 'guest') and user.get('learning_level') not in LEARNING_LEVELS:
-                user['learning_level'] = LEARNING_LEVEL_DEFAULT
+                user['learning_level'] = learning_level_for(user)
             user['updated_at'] = now_ts()
             users[email] = user
             _write_json(USERS_FILE, users)
