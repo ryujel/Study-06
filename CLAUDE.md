@@ -34,3 +34,12 @@ An internet connection is required both to load the Supabase client script and t
 - Mutations (`addItem`, `toggleItem`, `removeItem`, `clearChecked`) are `async` and await the corresponding Supabase call (`insert`/`update`/`delete`); `toggleItem` updates local state optimistically and reverts + re-renders if the Supabase call fails, and the others log to `console.error` on failure without rolling back.
 - List interactions (checkbox toggle, delete) use a single delegated click listener on `#list` rather than per-item listeners; `li.dataset.id` (coerced with `Number(...)`, since Supabase returns numeric ids) maps a DOM node back to its item.
 - Item removal plays a CSS `fadeOut` animation before the item is actually spliced out of `items` (`removeItem` waits on `animationend`), so the array mutation — and the Supabase `delete` — is deferred relative to the click.
+
+## 이미지 생성 제외 단어 (2부류)
+
+새 단어가 나오면 아래 두 부류 중 하나에 해당할 때 이미지 생성 단어에서 제외한다.
+
+1. **기존 이미지가 있는 단어** — Supabase `word_images`에 이미 있는 단어(뜻이 다른 동음이의어·(레시피) 식자재 행은 별개). 매번 DB와 대조한다.
+2. **단어로 추출됐지만 불필요해 삭제한 단어** — `docs/삭제단어_기억.md`(= 엑셀 `예외단어` 시트)에 기록. 새로 지우면 두 곳에 함께 기록한다.
+
+GPT가 제외·통합한 단어는 클로드가 다시 추가하지 않는다(충돌하면 GPT 의견 우선).

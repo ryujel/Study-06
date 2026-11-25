@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>글자 그림 짝짓기 로그인</title>
+<style>
+  :root{--bg:#eef2f4;--card:#fff;--fg:#1c2a33;--muted:#5d6f7a;--line:#cfd9de;--teal:#167d7f}
+  @media (prefers-color-scheme: dark){:root{--bg:#12181c;--card:#1d262c;--fg:#eaf1f4;--muted:#9db0ba;--line:#34444d;--teal:#4cc2c4}}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--fg);font:16px/1.5 "Noto Sans KR",system-ui,sans-serif;padding:16px}
+  form{width:min(380px,100%);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;display:grid;gap:12px}
+  h1{margin:0;font-size:1.25rem}
+  p{margin:0;color:var(--muted);font-size:.9rem}
+  input{height:46px;border:1px solid var(--line);border-radius:12px;padding:0 12px;font:inherit;background:var(--bg);color:var(--fg)}
+  button{height:48px;border:0;border-radius:12px;background:var(--teal);color:#fff;font:inherit;font-weight:800;cursor:pointer}
+  button:disabled{opacity:.6}
+  #msg{min-height:1.3em;color:#d63b3b;font-size:.9rem}
+</style></head>
+<body>
+<form id="f">
+  <h1>korlec 로그인</h1>
+  <p>korlec.com 계정으로 로그인하면 내 단어와 정답 카드를 볼 수 있어요.</p>
+  <input id="email" type="email" autocomplete="username" placeholder="이메일" required>
+  <input id="pw" type="password" autocomplete="current-password" placeholder="비밀번호" required>
+  <div id="msg" role="alert"></div>
+  <button id="go" type="submit">로그인</button>
+  <p>구글로만 가입했다면 korlec.com에서 비밀번호를 먼저 만들어 주세요.</p>
+</form>
+<script>
+(function () {
+  var GAME = '/Tool/06WordGame/app/src/main/assets/index.html';
+  var f = document.getElementById('f'), msg = document.getElementById('msg'), go = document.getElementById('go');
+  f.addEventListener('submit', function (e) {
+    e.preventDefault(); msg.textContent = ''; go.disabled = true;
+    fetch('/api/auth/login', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: document.getElementById('email').value.trim(), password: document.getElementById('pw').value }) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok && j.ok !== false, j: j }; }); })
+      .then(function (x) { if (x.ok) location.replace(GAME); else { msg.textContent = (x.j && x.j.message) || '이메일이나 비밀번호를 확인해 주세요.'; go.disabled = false; } })
+      .catch(function () { msg.textContent = '인터넷 연결을 확인해 주세요.'; go.disabled = false; });
+  });
+})();
+</script>
+</body></html>
